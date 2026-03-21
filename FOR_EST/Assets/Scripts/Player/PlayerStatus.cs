@@ -11,5 +11,10 @@ public class PlayerStatus
     public Vector2 InputAxis;
     public float MoveSpeed;
     public float PushSpeed;
-    public float JumpVelocity;
+    public float JumpPower;
+    public float GravityScale;
+
+    public bool IsJumping { get; set; }
+    public bool IsFalling { get; set; }
+    public Vector2 BeforePosition { get; set; }
 }
