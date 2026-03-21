@@ -10,7 +10,6 @@ public class PlayerController : MonoBehaviour, IReversable
     [SerializeField] private PlayerStatus _status = new PlayerStatus();   
     private PlayerMovement _movement;
     
-    
     private UserInput _input;
     private GameObject _grabObject;
 
@@ -26,7 +25,7 @@ public class PlayerController : MonoBehaviour, IReversable
         _input.asset.Enable();
         _input.Player.Move.performed += OnMove;
         _input.Player.Move.canceled += OffMove;
-        _input.Player.Jump.performed += _ => { };
+        _input.Player.Jump.performed += OnJump;
         _input.Player.Reverse.performed += _ => { };
         _input.Player.ShowReverse.performed += _ => { };
         _input.Player.Restart.performed += _ => { };
@@ -46,7 +45,13 @@ public class PlayerController : MonoBehaviour, IReversable
     {
         _status.InputAxis = Vector2.zero;
     }
-    
+
+    private void OnJump(InputAction.CallbackContext ctx)
+    {
+        if (_status.IsJumping || _status.IsFalling) return;
+        _movement.ChangeJumpState(_movement.Jumping);
+    }
+
     public void Reverse()
     {
 
