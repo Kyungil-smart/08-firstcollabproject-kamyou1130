@@ -112,8 +112,10 @@ namespace Obstacle
                 
                 _rb.MovePosition(new Vector2(followTarget, _rb.position.y));
 
-                if (transform.position.y < _spawnPos.y + 0.5f)     _rb.gravityScale = _fallingGravity;
-                else                                               _rb.gravityScale = _originalGravity;
+                float gravityDirection = Mathf.Sign(_rb.gravityScale);
+                
+                if (transform.position.y < _spawnPos.y + 0.5f)     _rb.gravityScale = _fallingGravity * gravityDirection;
+                else                                               _rb.gravityScale = _originalGravity * gravityDirection;
             }
         }
 
@@ -138,7 +140,7 @@ namespace Obstacle
         {
             if (_playerHand != null)
             {
-                var player = _playerHand.GetComponent<PlayerController>();
+                var player = _playerHand.GetComponentInParent<PlayerController>();
                 if (player != null) player.OffGrab();
             }
 
@@ -149,6 +151,7 @@ namespace Obstacle
 
         public void Reverse()
         {
+            Debug.Log($"Reverse 호출{_isPulling}");
             if (!_reverseObject.canReverse || !_isPulling) return; //당겨지고 있지 않으면 리버스가 안되도록 함
 
             transform.position *= new Vector2(1f, -1f);
@@ -164,7 +167,7 @@ namespace Obstacle
 
         private IEnumerator RespawnRoutine()
         {
-            _rb.gravityScale = 0;
+            _rb.simulated = false;
             _renderer.enabled = false;
             _collider[0].enabled = false;
             _collider[1].enabled = false;
@@ -173,7 +176,7 @@ namespace Obstacle
 
             transform.position = _spawnPos;
 
-            _rb.gravityScale = _originalGravity;
+            _rb.simulated = true;
             _renderer.enabled = true;
             _collider[0].enabled = true;
             _collider[1].enabled = true;
