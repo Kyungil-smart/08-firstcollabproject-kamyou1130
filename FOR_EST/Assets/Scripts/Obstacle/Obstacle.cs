@@ -69,6 +69,9 @@ namespace Obstacle
 
         [Header("장애물이 플레이어에게 붙어 있을 거리")]
         [SerializeField] private Vector2 _pivot;
+        
+        [Header("반전 될 오브젝트")]
+        [SerializeField]private ReverseObject _reverseObject;
 
         private Rigidbody2D _rb;
         private SpriteRenderer _renderer;
@@ -104,11 +107,13 @@ namespace Obstacle
         {
             if (_isPulling && _playerHand != null)
             {
-                float followTarget = _playerHand.position.x + _pivot.x;
+                float direction = (_playerHand.position.x > transform.position.x) ? -1f : 1f;
+                float followTarget = _playerHand.position.x + (Mathf.Abs(_pivot.x) * direction);
+                
                 _rb.MovePosition(new Vector2(followTarget, _rb.position.y));
 
                 if (transform.position.y < _spawnPos.y + 0.5f)     _rb.gravityScale = _fallingGravity;
-                else                                        _rb.gravityScale = _originalGravity;
+                else                                               _rb.gravityScale = _originalGravity;
             }
         }
 
@@ -144,7 +149,11 @@ namespace Obstacle
 
         public void Reverse()
         {
+            if (!_reverseObject.canReverse || !_isPulling) return; //당겨지고 있지 않으면 리버스가 안되도록 함
 
+            transform.position *= new Vector2(1f, -1f);
+            transform.localScale *= new Vector2(1f, -1f);
+            _rb.gravityScale *= -1f;
         }
 
         // 장애물이 사라지는 조건 (맵 밖으로 밀려남)에 위치에 장애물이 걸리게 되면 해당 메서드를 실행하면 됨
