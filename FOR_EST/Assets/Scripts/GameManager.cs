@@ -18,8 +18,10 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     public bool IsClear { get; private set; }
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        
         Init();
     }
 
