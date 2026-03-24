@@ -44,6 +44,7 @@ namespace Obstacle
         private Collider2D[] _collider;
         private float _originalGravity;
         private float _fallingGravity = 7f;
+        private bool _isRunning = false;
 
         private void Awake()
         {
@@ -123,24 +124,45 @@ namespace Obstacle
         // 장애물이 사라지는 조건 (맵 밖으로 밀려남)에 위치에 장애물이 걸리게 되면 해당 메서드를 실행하면 됨
         public override void Respawn()
         {
+            if (_isRunning) return;
             StartCoroutine(RespawnRoutine());
         }
 
         private IEnumerator RespawnRoutine()
         {
+            _isRunning = true;
             _rb.simulated = false;
             _renderer.enabled = false;
             _collider[0].enabled = false;
             _collider[1].enabled = false;
             
+            transform.position = _spawnPos + Vector2.down * _riseH;
+
             yield return YieldContainer.WaitForSeconds(_respawnTime);
             
-            base.Respawn();
-            
+            _rb.bodyType = RigidbodyType2D.Kinematic;
             _rb.simulated = true;
             _renderer.enabled = true;
             _collider[0].enabled = true;
             _collider[1].enabled = true;
+
+            float duration = _riseT;
+            float elapseTime = 0f;
+            Vector2 startPos = transform.position;
+
+            while (elapseTime < duration)
+            {
+                elapseTime += Time.deltaTime;
+                float time = elapseTime / duration;
+                
+                _rb.MovePosition(Vector2.Lerp(startPos, _spawnPos, time));
+                
+                yield return null;
+            }
+
+            transform.position = _spawnPos;
+            _rb.bodyType = RigidbodyType2D.Dynamic;
+            _isRunning = false;
         }
 
 
