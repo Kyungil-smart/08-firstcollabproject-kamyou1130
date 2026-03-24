@@ -13,7 +13,8 @@ namespace Obstacle
     ///            아래쪽에 장애물이 뚫려보인다
     ///         3. 장애물이 리스폰 되는 도중 리스폰 키 입력 시 솟아오리지
     ///            않고 즉시 리스폰 되어 버리는 현상 발생
-    ///         4.
+    ///         4. 반전영역에서의 장에물 오브젝트 생성 및 리스폰시
+    ///            반전 영역에 맞게 재설정 필요
     ///
     ///         3.1. bool 변수 추가로 재생성 도중 리스폰키 추가 입력 방지
     ///
@@ -41,7 +42,8 @@ namespace Obstacle
         [SerializeField] private float _riseT;
         
         private SpriteRenderer _renderer;
-        private Collider2D[] _collider;
+        private Collider2D _collider;
+        private Collider2D _playerCollider;
         private float _originalGravity;
         private float _fallingGravity = 7f;
         private bool _isRunning = false;
@@ -55,7 +57,8 @@ namespace Obstacle
         {
             if (_isPulling && _playerHand != null)
             {
-                float dist = Vector2.Distance(transform.position, _playerHand.position);
+                Vector2 grabPoint = _collider.ClosestPoint(_playerHand.position);
+                float dist = Vector2.Distance(grabPoint, _playerHand.position);
 
                 if (dist > _linkDist)
                 {
@@ -73,7 +76,8 @@ namespace Obstacle
             if (_isPulling && _playerHand != null)
             {
                 float direction = (_playerHand.position.x > transform.position.x) ? -1f : 1f;
-                float followTarget = _playerHand.position.x + (Mathf.Abs(_pivot.x) * direction);
+                float halfW = _renderer.bounds.extents.x;
+                float followTarget = _playerHand.position.x + ((halfW + _pivot.x) * direction);
                 
                 _rb.MovePosition(new Vector2(followTarget, _rb.position.y));
 
@@ -89,7 +93,7 @@ namespace Obstacle
         {
             base.Init();
             _renderer = GetComponent<SpriteRenderer>();
-            _collider = GetComponents<Collider2D>();
+            _collider = GetComponent<Collider2D>();
             _originalGravity = _rb.gravityScale;
         }
 
@@ -97,12 +101,27 @@ namespace Obstacle
         {
             base.OnPull(playerHand);
             _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            //
+            // _playerCollider = playerHand.GetComponentInParent<Collider2D>();
+            // if (_playerCollider != null)
+            // {
+            //     Physics2D.IgnoreCollision(_collider, _playerCollider, true);
+            //     Debug.Log("물리충돌 무시");
+            // }
+            
         }
 
         public override void OnStopP()
         {
             if (_playerHand != null)
             {
+                // if (_playerCollider != null)
+                // {
+                //     Physics2D.IgnoreCollision(_collider, _playerCollider, false);
+                //     _playerCollider = null;
+                //     Debug.Log("물리충돌 재실행");
+                // }
+                
                 var player = _playerHand.GetComponentInParent<PlayerController>();
                 if (player != null) player.OffGrab();
             }
@@ -133,8 +152,7 @@ namespace Obstacle
             _isRunning = true;
             _rb.simulated = false;
             _renderer.enabled = false;
-            _collider[0].enabled = false;
-            _collider[1].enabled = false;
+            _collider.enabled = false;
             
             transform.position = _spawnPos + Vector2.down * _riseH;
 
@@ -143,8 +161,7 @@ namespace Obstacle
             _rb.bodyType = RigidbodyType2D.Kinematic;
             _rb.simulated = true;
             _renderer.enabled = true;
-            _collider[0].enabled = true;
-            _collider[1].enabled = true;
+            _collider.enabled = true;
 
             float duration = _riseT;
             float elapseTime = 0f;
@@ -162,6 +179,7 @@ namespace Obstacle
 
             transform.position = _spawnPos;
             _rb.bodyType = RigidbodyType2D.Dynamic;
+            _rb.gravityScale = _originalGravity;
             _isRunning = false;
         }
 
@@ -170,16 +188,24 @@ namespace Obstacle
         {
             if (_playerHand != null)
             {
-                float dist = Vector2.Distance(transform.position, _playerHand.position);
-
+                float dist = Vector2.Distance(_collider.ClosestPoint(_playerHand.position), _playerHand.position);
+        
                 if (dist > _linkDist) Gizmos.color = Color.red;
                 else                  Gizmos.color = Color.green;
-
+        
                 Gizmos.DrawLine(transform.position, _playerHand.position);
                 Vector3 cubeSize = new Vector3(_linkDist * 2, _linkDist * 2, 0.1f);
-
-                Gizmos.color = new Color(1, 1, 0, 0.3f); 
-                Gizmos.DrawWireCube(transform.position, cubeSize);
+        
+                if (_isPulling && _playerHand != null && _renderer != null)
+                {
+                    float direction = (_playerHand.position.x > transform.position.x) ? -1f : 1f;
+                    float halfW = _renderer.bounds.extents.x;
+                    float followTarget = _playerHand.position.x + ((halfW + _pivot.x) * direction);
+                    Vector3 targetPos = new Vector3(followTarget, transform.position.y, 0);
+        
+                    Gizmos.color = Color.yellow;
+                    Gizmos.DrawWireCube(targetPos, cubeSize);
+                }
             }
         }
     }

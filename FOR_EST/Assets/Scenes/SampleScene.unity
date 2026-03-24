@@ -9406,8 +9406,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Obstacle
   _respawnTime: 1
-  _linkDist: 1
-  _pivot: {x: 0.5, y: 0}
+  _linkDist: 0.2
+  _pivot: {x: 0.1, y: 0}
   _reverseObject: {fileID: 1147104875}
   _riseH: 2
   _riseT: 0.5
@@ -13203,8 +13203,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Obstacle
   _respawnTime: 2
-  _linkDist: 1
-  _pivot: {x: 0.5, y: 0}
+  _linkDist: 0.5
+  _pivot: {x: 0.2, y: 0}
   _reverseObject: {fileID: 0}
   _riseH: 0
   _riseT: 0
@@ -19912,8 +19912,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Obstacle
   _respawnTime: 2
-  _linkDist: 1
-  _pivot: {x: 0.5, y: 0}
+  _linkDist: 0.1
+  _pivot: {x: 0.2, y: 0}
   _reverseObject: {fileID: 0}
   _riseH: 0
   _riseT: 0
