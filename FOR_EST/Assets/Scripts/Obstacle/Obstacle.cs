@@ -27,21 +27,23 @@ namespace Obstacle
         [SerializeField] private float _respawnTime;
 
         [Header("플레이어와 장애물 간의 상호작용 가능 거리")] 
-        [SerializeField] private float _linkDist = 1f;
+        [SerializeField] private float _linkDist = 0.5f;
 
         [Header("장애물이 플레이어에게 붙어 있을 거리")]
         [SerializeField] private Vector2 _pivot;
+
+        [Header("반전 세계에 있는 오브젝트")] 
+        [SerializeField] private bool _isThisObjBelongsToTheReverseWorld = false;
         
-        [Header("반전 될 오브젝트")]
+        [Header("서로 반전 될 오브젝트")]
         [SerializeField] private ReverseObject _reverseObject;
         
         [Header("장애물이 솟아오르기까지 걸리는 시간")] 
         [SerializeField] private float _riseT;
         
         private SpriteRenderer _renderer;
-        private Collider2D _collider;
+        private Collider2D _collider; 
         private float _originalGravity;
-        private float _fallingGravity = 7f;
         private bool _isRespawning = false;
 
         private void Awake()
@@ -58,7 +60,6 @@ namespace Obstacle
 
                 if (dist > _linkDist)
                 {
-                    Debug.Log("플레이어와 멀어짐");
                     OnStopP();
                 }
             }
@@ -76,11 +77,6 @@ namespace Obstacle
                 float followTarget = _playerHand.position.x + ((halfW + _pivot.x) * direction);
                 
                 _rb.MovePosition(new Vector2(followTarget, _rb.position.y));
-
-                float gravityDirection = Mathf.Sign(_rb.gravityScale);
-                
-                if (transform.position.y < _spawnPos.y + 0.5f)     _rb.gravityScale = _fallingGravity * gravityDirection;
-                else                                               _rb.gravityScale = _originalGravity * gravityDirection;
             }
         }
 
@@ -91,6 +87,8 @@ namespace Obstacle
             _renderer = GetComponent<SpriteRenderer>();
             _collider = GetComponent<Collider2D>();
             _originalGravity = _rb.gravityScale;
+
+            if (_isThisObjBelongsToTheReverseWorld) ReverseState();
         }
 
         public override void OnPull(Transform playerHand)
@@ -113,12 +111,22 @@ namespace Obstacle
 
         public void Reverse()
         {
-            Debug.Log($"Reverse 호출{_isPulling}");
             if (!_reverseObject.canReverse || !_isPulling) return; //당겨지고 있지 않으면 리버스가 안되도록 함
-
+            
             transform.position *= new Vector2(1f, -1f);
             transform.localScale *= new Vector2(1f, -1f);
+
             _rb.gravityScale *= -1f;
+        }
+
+        public void ReverseState()
+        {
+            _rb.gravityScale = -1f;
+            _originalGravity = _rb.gravityScale;
+            
+            Vector3 scale = transform.localScale;
+            scale.y *= -1f;
+            transform.localScale = scale;
         }
 
         // 장애물이 사라지는 조건 (맵 밖으로 밀려남)에 위치에 장애물이 걸리게 되면 해당 메서드를 실행하면 됨
@@ -135,13 +143,18 @@ namespace Obstacle
             _rb.simulated = false;
             _renderer.enabled = false;
             _collider.enabled = false;
+
+            float direction = Mathf.Sign(_originalGravity);
+            float originalScale = _isThisObjBelongsToTheReverseWorld ? 
+                                  -Mathf.Abs(transform.localScale.y) : Mathf.Abs(transform.localScale.y);
+            Vector2 targetScale = new Vector2(transform.localScale.x, originalScale);
             
-            Vector2 originalScale = transform.localScale;
-            // transform.localScale = new Vector2(originalScale.x, originalScale.y);
+            float startH = Mathf.Abs(originalScale) * 0.5f;
             
-            float startH = _renderer.bounds.extents.y + 0.2f;
-            Vector2 bottomPos = _spawnPos + Vector2.down * startH;
-            transform.position = bottomPos;
+            Vector2 startPos = _spawnPos + Vector2.down * direction * (startH + 0.2f);
+            
+            transform.position = startPos;
+            transform.localScale = new Vector2(targetScale.x, 0);
 
             yield return YieldContainer.WaitForSeconds(_respawnTime);
             
@@ -156,16 +169,15 @@ namespace Obstacle
             {
                 elapseTime += Time.deltaTime;
                 float time = elapseTime / _riseT;
-                
-                transform.localScale = new Vector2(originalScale.x, Mathf.Lerp(0f, originalScale.y,time));
-                
-                float currentHalfHeight = (_renderer.bounds.size.y) / 2f;
-                transform.position = bottomPos + Vector2.up * currentHalfHeight;
-                
+        
+                transform.localScale = new Vector2(targetScale.x, Mathf.Lerp(0f, targetScale.y, time));
+                transform.position = Vector2.Lerp(startPos, _spawnPos, time);
+        
                 yield return null;
             }
 
-            transform.localScale = originalScale;
+            transform.localScale = targetScale;
+            transform.position = _spawnPos;
             _rb.bodyType = RigidbodyType2D.Dynamic;
             _rb.gravityScale = _originalGravity;
             _isRespawning = false;

@@ -73,6 +73,12 @@ public class PlayerController : MonoBehaviour
     private void OnReverse(InputAction.CallbackContext ctx)
     {
         _reverse.Reverse();
+        
+        if (_status.GrabbedObject != null)
+        {
+            IReversable rv = _status.GrabbedObject as IReversable;
+            rv?.Reverse();
+        }
     }
 
     private void OnInteract(InputAction.CallbackContext ctx)
