@@ -12047,7 +12047,7 @@ MonoBehaviour:
   _pivot: {x: 0.2, y: 0}
   _isThisObjBelongsToTheReverseWorld: 0
   _reverseObject: {fileID: 1640446159}
-  _riseT: 0
+  _riseT: 0.3
   _groundLayer:
     serializedVersion: 2
     m_Bits: 512
@@ -19140,7 +19140,7 @@ MonoBehaviour:
   _pivot: {x: 0.2, y: 0}
   _isThisObjBelongsToTheReverseWorld: 0
   _reverseObject: {fileID: 480033081}
-  _riseT: 0
+  _riseT: 0.3
   _groundLayer:
     serializedVersion: 2
     m_Bits: 512
