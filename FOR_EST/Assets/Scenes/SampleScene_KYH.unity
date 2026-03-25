@@ -5909,7 +5909,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1004481056574762761, guid: e2731321767292e4180c274ecf8fdf5f, type: 3}
       propertyPath: _status.JumpPower
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1004481056574762761, guid: e2731321767292e4180c274ecf8fdf5f, type: 3}
       propertyPath: _status.MoveSpeed
@@ -5962,6 +5962,10 @@ PrefabInstance:
     - target: {fileID: 7703566366851447466, guid: e2731321767292e4180c274ecf8fdf5f, type: 3}
       propertyPath: m_Name
       value: P_Est
+      objectReference: {fileID: 0}
+    - target: {fileID: 7703566366851447466, guid: e2731321767292e4180c274ecf8fdf5f, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7260,6 +7264,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 349241193}
+  - component: {fileID: 349241194}
   m_Layer: 0
   m_Name: StartPoint
   m_TagString: Untagged
@@ -7282,6 +7287,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &349241194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349241192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24b1fe9549afac24895d2372799b6248, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStartPoint
+  _offset: {x: -4.5, y: 1}
 --- !u!1001 &354494239
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8587,11 +8605,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15bf65d52f785ca4190cedb5dec7a534, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Obstacle
-  _spawnPos: {x: 0, y: 0}
   _respawnTime: 2
   _linkDist: 1
   _pivot: {x: 0.5, y: 0}
+  _isThisObjBelongsToTheReverseWorld: 0
   _reverseObject: {fileID: 0}
+  _riseT: 0
 --- !u!4 &516630071 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6300417579605794100, guid: 34dcc3ad31c73ba469b3c789d3919f77, type: 3}
@@ -12420,11 +12439,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15bf65d52f785ca4190cedb5dec7a534, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Obstacle
-  _spawnPos: {x: 0, y: 0}
   _respawnTime: 2
   _linkDist: 1
   _pivot: {x: 0.5, y: 0}
+  _isThisObjBelongsToTheReverseWorld: 0
   _reverseObject: {fileID: 0}
+  _riseT: 0
 --- !u!212 &1109885613
 SpriteRenderer:
   serializedVersion: 2
@@ -14692,6 +14712,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ReverseView
   _player: {fileID: 1489829922}
   _reverseObject: {fileID: 1063567266583476793}
+  _reverseIcon: {fileID: 6352802407340002352, guid: 593b44f424b7f1a42971007725a074fb, type: 3}
 --- !u!61 &1414638065 stripped
 BoxCollider2D:
   m_CorrespondingSourceObject: {fileID: 4284052444120879578, guid: 34dcc3ad31c73ba469b3c789d3919f77, type: 3}
@@ -19204,11 +19225,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15bf65d52f785ca4190cedb5dec7a534, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Obstacle
-  _spawnPos: {x: 0, y: 0}
   _respawnTime: 2
   _linkDist: 1
   _pivot: {x: 0.5, y: 0}
+  _isThisObjBelongsToTheReverseWorld: 0
   _reverseObject: {fileID: 0}
+  _riseT: 0
 --- !u!212 &2137348825
 SpriteRenderer:
   serializedVersion: 2

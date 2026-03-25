@@ -15,11 +15,8 @@ public class PlayerController : MonoBehaviour
     
     private UserInput _input;
     private GameObject _grabObject;
+    public bool _isReverse { get; set; }
     
-    
-    
-    
-
     private void Awake()
     {
         _input = new UserInput();
@@ -28,6 +25,8 @@ public class PlayerController : MonoBehaviour
         _reverse = GetComponent<PlayerReverse>();
         _reverseView = GetComponentInChildren<ReverseView>();
         _status.InputAxis.AddListener(SetDirection);
+        _movement._rigidbody.gravityScale = _status.GravityScale;
+        _isReverse = false;
     }
 
     private void OnEnable()
@@ -55,6 +54,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnMove(InputAction.CallbackContext ctx)
     {
+        if (!_reverseView.IsPlayerView) return;
         _status.InputAxis.Value = ctx.ReadValue<Vector2>();
     }
 
@@ -65,13 +65,15 @@ public class PlayerController : MonoBehaviour
 
     private void OnJump(InputAction.CallbackContext ctx)
     {
-        if (_status.IsJumping || _status.IsFalling) return;
+        if (_status.IsJumping || _status.IsFalling || !_reverseView.IsPlayerView) return;
         _movement.ChangeJumpState(_movement.Jumping);
     }
 
     // 플레이어 반전 기능 Z키
     private void OnReverse(InputAction.CallbackContext ctx)
     {
+        if (_status.IsJumping || _status.IsFalling) return;
+        _isReverse = !_isReverse; 
         _reverse.Reverse();
         if (_status.GrabbedObject != null)
         {
@@ -82,12 +84,14 @@ public class PlayerController : MonoBehaviour
 
     private void OnInteract(InputAction.CallbackContext ctx)
     {
+        if (_status.IsJumping || _status.IsFalling) return;
         TryInteractObject();
     }
 
     // 카메라 시점 전환 X키
     private void OnShowReverse(InputAction.CallbackContext ctx)
     {
+        if (_status.IsJumping || _status.IsFalling) return;
         _reverseView.ChangeReverseView();
     }
 
@@ -133,4 +137,5 @@ public class PlayerController : MonoBehaviour
         _status.GrabbedObject = null;
         _status.IsGrab = false;
     }
+
 }
