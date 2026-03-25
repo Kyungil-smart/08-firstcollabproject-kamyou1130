@@ -1,16 +1,20 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class VolumeText : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public Slider volumeSlider;
+    public TextMeshProUGUI volumeText;
+
     void Start()
     {
-        
+        UpdateVolumeText();
+        volumeSlider.onValueChanged.AddListener(delegate { UpdateVolumeText();});
     }
-
-    // Update is called once per frame
-    void Update()
+    public void UpdateVolumeText()
     {
-        
+        float percent = Mathf.RoundToInt(volumeSlider.value * 100);
+        volumeText.text = percent + "%";
     }
 }
