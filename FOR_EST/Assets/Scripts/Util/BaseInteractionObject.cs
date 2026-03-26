@@ -12,7 +12,7 @@ public abstract class BaseInteractionObject : MonoBehaviour, IPullable, IRespawn
     
     protected Vector2 _spawnPos;
     protected Transform _playerHand;
-    public Rigidbody2D _rb;
+    protected Rigidbody2D _rb { get; private set; }
     protected SpriteRenderer _renderer;
     protected Collider2D _collider;
     protected bool _isPulling = false;
