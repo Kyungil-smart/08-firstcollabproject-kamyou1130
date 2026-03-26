@@ -90,6 +90,7 @@ namespace Obstacle
 
         public void Reverse()
         {
+            if (_reverseObjectScript == null) Init();
             if (!_reverseObjectScript.canReverse) return;
             _reverseObjectScript.OnReverseGround();
             if (!_reverseObjectScript.canReverse || !_isPulling || !_reverseObjectScript.OnGround) return; //당겨지고 있지 않으면 리버스가 안되도록 함
