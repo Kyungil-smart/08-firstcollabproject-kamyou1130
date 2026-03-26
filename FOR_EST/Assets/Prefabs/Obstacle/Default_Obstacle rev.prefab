@@ -94,8 +94,9 @@ MonoBehaviour:
   _target: {fileID: 0}
   _reverseLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1091072
   _groundLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1091072
   <canReverse>k__BackingField: 0
+  <OnGround>k__BackingField: 0

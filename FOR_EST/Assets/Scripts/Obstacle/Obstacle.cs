@@ -83,6 +83,7 @@ namespace Obstacle
             _originalGravity = _rb.gravityScale;
             if (_reverseObjectPrefab != null) _reverseObjectPrefab = Instantiate(_reverseObjectPrefab);
             _reverseObjectScript = _reverseObjectPrefab.GetComponent<ObstacleReverseObject>();
+            if(_reverseObjectScript != null) _reverseObjectScript.Init(this.gameObject, this);
 
             if (_isThisObjBelongsToTheReverseWorld) ReversingState();
         }

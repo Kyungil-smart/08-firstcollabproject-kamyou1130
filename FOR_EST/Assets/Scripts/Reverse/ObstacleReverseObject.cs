@@ -22,7 +22,6 @@ public class ObstacleReverseObject : MonoBehaviour
     {
         canReverse = true;
         OnGround = true;
-        _obstacle = _target.GetComponent<Obstacle.Obstacle>();
         _collider = GetComponent<Collider2D>();
     }
 
@@ -54,9 +53,17 @@ public class ObstacleReverseObject : MonoBehaviour
         
         canReverse = true;
     }
+
+    public void Init(GameObject target, Obstacle.Obstacle obstacle)
+    {
+        _target = target;
+        _obstacle = obstacle;
+    }
     
     public void OnReverseGround()
     {
+        if(_obstacle == null) return;
+        
         float gravity = _obstacle.GetComponent<Rigidbody2D>().gravityScale;
         float checkY = (Mathf.Sign(gravity) * -1 > 0) ? _collider.bounds.min.y : _collider.bounds.max.y;
         
@@ -71,7 +78,7 @@ public class ObstacleReverseObject : MonoBehaviour
             0f,
             direction,
             0.1f,
-            _groundLayerMask
+            _groundLayerMask | _reverseLayerMask
         );
 
         if (!hit)
