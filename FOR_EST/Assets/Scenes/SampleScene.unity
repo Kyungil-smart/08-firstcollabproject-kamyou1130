@@ -6030,6 +6030,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 309066011049023166, guid: e2731321767292e4180c274ecf8fdf5f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 309066011049023166, guid: e2731321767292e4180c274ecf8fdf5f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 309066011049023166, guid: e2731321767292e4180c274ecf8fdf5f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1063567267200672208, guid: e2731321767292e4180c274ecf8fdf5f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.99
@@ -8059,7 +8071,7 @@ GameObject:
   - component: {fileID: 480033083}
   - component: {fileID: 480033082}
   - component: {fileID: 480033081}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: test_Obstacle rev (2)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -8078,11 +8090,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec66acecd8d0c784fa43c5538a92486f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ReverseObject
-  _player: {fileID: 2137348826}
-  _layerMask:
+  _player: {fileID: 2137348820}
+  _reverseLayerMask:
+    serializedVersion: 2
+    m_Bits: 1085952
+  _groundLayerMask:
     serializedVersion: 2
     m_Bits: 0
-  <canReverse>k__BackingField: 0
+  <CanReverse>k__BackingField: 0
+  <OnGround>k__BackingField: 0
 --- !u!61 &480033082
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12120,17 +12136,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15bf65d52f785ca4190cedb5dec7a534, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Obstacle
-  _respawnTime: 2
   _linkDist: 0.5
+  _respawnTime: 2
   _pivot: {x: 0.2, y: 0}
   _isThisObjBelongsToTheReverseWorld: 0
-  _reverseObject: {fileID: 1640446159}
+  _reverseObjectPrefab: {fileID: 1640446158}
   _riseT: 0.3
   _groundLayer:
     serializedVersion: 2
     m_Bits: 512
+  _groundReverseLayer:
+    serializedVersion: 2
+    m_Bits: 0
   _groundDistance: 0
   _groundSizeX: 1
+  _isReverse: 0
 --- !u!212 &1109885613
 SpriteRenderer:
   serializedVersion: 2
@@ -15592,7 +15612,7 @@ GameObject:
   - component: {fileID: 1640446161}
   - component: {fileID: 1640446160}
   - component: {fileID: 1640446159}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: test_Obstacle rev (1)
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -15611,11 +15631,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec66acecd8d0c784fa43c5538a92486f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ReverseObject
-  _player: {fileID: 1109885614}
-  _layerMask:
+  _player: {fileID: 1109885608}
+  _reverseLayerMask:
+    serializedVersion: 2
+    m_Bits: 1085952
+  _groundLayerMask:
     serializedVersion: 2
     m_Bits: 0
-  <canReverse>k__BackingField: 0
+  <CanReverse>k__BackingField: 0
+  <OnGround>k__BackingField: 0
 --- !u!61 &1640446160
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -17637,7 +17661,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HappyFruit
   _spawnPos: {x: 0, y: 0}
+  _linkDist: 0.5
   _respawnTime: 1
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  _groundDistance: 0
+  _groundSizeX: 1
 --- !u!1001 &1964938667
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18519,7 +18549,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SadFruit
   _spawnPos: {x: 0, y: 0}
+  _linkDist: 0.5
   _respawnTime: 1
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  _groundDistance: 0
+  _groundSizeX: 1
 --- !u!61 &2073825346 stripped
 BoxCollider2D:
   m_CorrespondingSourceObject: {fileID: 4284052444120879578, guid: 34dcc3ad31c73ba469b3c789d3919f77, type: 3}
@@ -19213,17 +19249,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15bf65d52f785ca4190cedb5dec7a534, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Obstacle
-  _respawnTime: 2
   _linkDist: 0.5
+  _respawnTime: 2
   _pivot: {x: 0.2, y: 0}
   _isThisObjBelongsToTheReverseWorld: 0
-  _reverseObject: {fileID: 480033081}
+  _reverseObjectPrefab: {fileID: 480033080}
   _riseT: 0.3
   _groundLayer:
     serializedVersion: 2
     m_Bits: 512
+  _groundReverseLayer:
+    serializedVersion: 2
+    m_Bits: 0
   _groundDistance: 0
   _groundSizeX: 0.9
+  _isReverse: 0
 --- !u!212 &2137348825
 SpriteRenderer:
   serializedVersion: 2
