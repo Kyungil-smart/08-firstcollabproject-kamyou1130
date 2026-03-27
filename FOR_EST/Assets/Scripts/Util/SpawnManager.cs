@@ -31,7 +31,12 @@ public class SpawnManager : MonoBehaviour
 
             if (prefab.prefab != null)
             {
-                Instantiate(prefab.prefab, dummy.transform.position, Quaternion.identity);
+                GameObject spawnObj = Instantiate(prefab.prefab, dummy.transform.position, Quaternion.identity);
+                if(dummy.transform.position.y < -1 && spawnObj.TryGetComponent<Obstacle.Obstacle>(out Obstacle.Obstacle obstacle))
+                {
+                    obstacle._isThisObjBelongsToTheReverseWorld = true;
+                    obstacle.ReversingState();
+                };
                 
                 Destroy(dummy.gameObject);
             }

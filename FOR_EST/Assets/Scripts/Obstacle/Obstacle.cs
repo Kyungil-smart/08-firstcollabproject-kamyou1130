@@ -22,7 +22,7 @@ namespace Obstacle
         [SerializeField] private Vector2 _pivot;
 
         [Header("반전 세계에 있는 오브젝트")] 
-        [SerializeField] private bool _isThisObjBelongsToTheReverseWorld = false;
+        [SerializeField] public bool _isThisObjBelongsToTheReverseWorld = false;
 
         [Header("서로 반전 될 오브젝트")] 
         [SerializeField] private GameObject _reverseObjectPrefab;
@@ -81,11 +81,11 @@ namespace Obstacle
         {
             base.Init();
             _originalGravity = _rb.gravityScale;
+            if (_isThisObjBelongsToTheReverseWorld) ReversingState();
             if (_reverseObjectPrefab != null) _reverseObjectPrefab = Instantiate(_reverseObjectPrefab);
             _reverseObjectScript = _reverseObjectPrefab.GetComponent<ObstacleReverseObject>();
             if(_reverseObjectScript != null) _reverseObjectScript.Init(this.gameObject, this);
 
-            if (_isThisObjBelongsToTheReverseWorld) ReversingState();
         }
 
         public void Reverse()
@@ -110,6 +110,7 @@ namespace Obstacle
         {
             _rb.gravityScale *= -1f;
             _originalGravity = _rb.gravityScale;
+            _isReverse = true;
             
             Vector3 scale = transform.localScale;
             scale.y *= -1f;
