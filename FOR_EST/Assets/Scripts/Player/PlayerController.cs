@@ -95,6 +95,14 @@ public class PlayerController : MonoBehaviour
     {
         _reverseObjectScript.OnReverseGround();
         if (_status.IsJumping || _status.IsFalling || !_reverseObjectScript.CanReverse || !_reverseObjectScript.OnGround) return;
+        if (!_isReverse)
+        {
+            _anim.SetBool("Reverse", true);
+        }
+        else
+        {
+            _anim.SetBool("Reverse", false);
+        }
         _isReverse = !_isReverse; 
         _reverse.Reverse();
         if (!_reverseView.IsPlayerView) _reverseView.ChangeReverseView();
