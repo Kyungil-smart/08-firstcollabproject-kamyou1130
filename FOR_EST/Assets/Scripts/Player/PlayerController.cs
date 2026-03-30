@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -24,6 +25,8 @@ public class PlayerController : MonoBehaviour, IRespawnable
 
     private Animator _anim;
     private SpriteRenderer _renderer;
+    private Vector2 _spawnPos;
+    private bool _isRespawning;
     
     private void Awake()
     {
@@ -39,6 +42,7 @@ public class PlayerController : MonoBehaviour, IRespawnable
         _reverseObjectScript = _reverseObjectPrefab.GetComponent<PlayerReverseObject>();
         _anim = GetComponentInChildren<Animator>();
         _renderer = GetComponentInChildren<SpriteRenderer>();
+        _spawnPos = transform.position;
     }
 
     private void OnEnable()
@@ -94,6 +98,14 @@ public class PlayerController : MonoBehaviour, IRespawnable
     {
         _reverseObjectScript.OnReverseGround();
         if (_status.IsJumping || _status.IsFalling || !_reverseObjectScript.CanReverse || !_reverseObjectScript.OnGround) return;
+        if (!_isReverse)
+        {
+            _anim.SetBool("Reverse", true);
+        }
+        else
+        {
+            _anim.SetBool("Reverse", false);
+        }
         _isReverse = !_isReverse; 
         _reverse.Reverse();
         if (!_reverseView.IsPlayerView) _reverseView.ChangeReverseView();
@@ -161,6 +173,21 @@ public class PlayerController : MonoBehaviour, IRespawnable
 
     public void Respawn()
     {
-        
+        if (_isRespawning) return;
+        StartCoroutine(RespawnRoutine());
+    }
+
+    private IEnumerator RespawnRoutine()
+    {
+        _isRespawning = true;
+
+        transform.position = _spawnPos;
+        _status.InputAxis.Value = Vector2.zero;
+        _input.asset.Disable();
+
+        yield return YieldContainer.WaitForSeconds(1f);
+
+        _input.asset.Enable();
+        _isRespawning = false;
     }
 }
