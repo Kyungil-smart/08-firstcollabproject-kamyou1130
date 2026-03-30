@@ -61,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             _walkAnimSpeed = Mathf.Lerp(_walkAnimSpeed, 0f, 0.4f);
+            if (_walkAnimSpeed < 0.1) _walkAnimSpeed = 0f;
             Anim.SetFloat("MoveSpeed", _walkAnimSpeed);
         }
     }
@@ -85,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
     {
         RaycastHit2D hit = Physics2D.CircleCast(
             (Controller._isReverse ? transform.position + new Vector3(0f, 1f, 0f) : transform.position - new Vector3(0f, 1f, 0f))
-            , 0.5f
+            , 0.4f
             , (Controller._isReverse ? Vector2.up : Vector2.down)
             , 3f
             , LayerMask.GetMask("Ground"));

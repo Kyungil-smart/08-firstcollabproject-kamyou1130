@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// 플레이어 조작 부분
 /// </summary>
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IRespawnable
 {
     [SerializeField] private PlayerStatus _status = new PlayerStatus();
     [SerializeField] private Transform _grabPoint;
@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
 
     private Animator _anim;
     private SpriteRenderer _renderer;
+    private Vector2 _spawnPos;
+    private bool _isRespawning;
     
     private void Awake()
     {
@@ -40,6 +42,7 @@ public class PlayerController : MonoBehaviour
         _reverseObjectScript = _reverseObjectPrefab.GetComponent<PlayerReverseObject>();
         _anim = GetComponentInChildren<Animator>();
         _renderer = GetComponentInChildren<SpriteRenderer>();
+        _spawnPos = transform.position;
     }
 
     private void OnEnable()
@@ -86,7 +89,7 @@ public class PlayerController : MonoBehaviour
     {
         if (_status.IsJumping || _status.IsFalling || !_reverseView.IsPlayerView) return;
         
-        _anim.SetTrigger("Jump");
+        _anim.SetBool("Jump", true);
         _movement.ChangeJumpState(_movement.Jumping);
     }
 
@@ -166,5 +169,25 @@ public class PlayerController : MonoBehaviour
     {
         _status.GrabbedObject = null;
         _status.IsGrab = false;
+    }
+
+    public void Respawn()
+    {
+        if (_isRespawning) return;
+        StartCoroutine(RespawnRoutine());
+    }
+
+    private IEnumerator RespawnRoutine()
+    {
+        _isRespawning = true;
+
+        transform.position = _spawnPos;
+        _status.InputAxis.Value = Vector2.zero;
+        _input.asset.Disable();
+
+        yield return YieldContainer.WaitForSeconds(1f);
+
+        _input.asset.Enable();
+        _isRespawning = false;
     }
 }
