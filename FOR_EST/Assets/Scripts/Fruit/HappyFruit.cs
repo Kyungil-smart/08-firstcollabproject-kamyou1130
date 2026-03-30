@@ -1,17 +1,19 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class HappyFruit : MonoBehaviour, IPullable
+public class HappyFruit : MonoBehaviour, IPullable, IRespawnable
 {
     [SerializeField] private Vector2 _spawnPos;
     [Header("상호작용 및 리스폰 설정")]
-    [SerializeField] private float _linkDist = 1.2f;
+    [SerializeField] private float _linkDist = 0.5f;
     [SerializeField] private float _respawnTime = 1f;
+    [SerializeField] private float _riseT = 0.3f;
 
     [Header("바닥 체크 설정")]
     [SerializeField] private LayerMask _groundLayer; 
-    [SerializeField] private float _groundDistance = 0.1f;
-    [SerializeField] private float _groundSizeX = 0.3f;
+    [SerializeField] private float _groundDistance = 0f;
+    [SerializeField] private float _groundSizeX = 1f;
 
     private Rigidbody2D _rb;
     private SpriteRenderer _renderer;
@@ -36,6 +38,11 @@ public class HappyFruit : MonoBehaviour, IPullable
                 OnStopP();
             }
         }
+
+        if (Keyboard.current.rKey.wasPressedThisFrame)
+        {
+            Respawn();
+        }
     }
 
     private void FixedUpdate()
@@ -52,7 +59,6 @@ public class HappyFruit : MonoBehaviour, IPullable
             if (playerMovement != null)
             {
                 float playerVX = playerMovement._rigidbody.linearVelocityX;
-
                 _rb.linearVelocity = new Vector2(playerVX, _rb.linearVelocity.y);
             }
         }
@@ -89,7 +95,6 @@ public class HappyFruit : MonoBehaviour, IPullable
         _playerHand = null;
 
         _rb.linearVelocity = new Vector2(0f, _rb.linearVelocity.y);
-
         _rb.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionX;
     }
 
@@ -151,12 +156,33 @@ public class HappyFruit : MonoBehaviour, IPullable
 
         yield return new WaitForSeconds(_respawnTime);
 
-        transform.position = _spawnPos;
-        _rb.linearVelocity = Vector2.zero;
+        float originalScaleY = Mathf.Abs(transform.localScale.y);
+        Vector2 targetScale = new Vector2(transform.localScale.x, originalScaleY);
+        Vector2 startPos = _spawnPos + Vector2.up * (originalScaleY * 0.5f + 0.2f);
 
-        _rb.simulated = true;
+        transform.position = startPos;
+        transform.localScale = new Vector2(targetScale.x, 0);
+
+        _rb.bodyType = RigidbodyType2D.Kinematic;
         _renderer.enabled = true;
+
+        float elapseTime = 0f;
+        while (elapseTime < _riseT)
+        {
+            elapseTime += Time.deltaTime;
+            float time = elapseTime / _riseT;
+
+            transform.localScale = new Vector2(targetScale.x, Mathf.Lerp(0f, targetScale.y, time));
+            transform.position = Vector2.Lerp(startPos, _spawnPos, time);
+            yield return null;
+        }
+
+        transform.localScale = targetScale;
+        transform.position = _spawnPos;
+        _rb.bodyType = RigidbodyType2D.Dynamic;
+        _rb.simulated = true;
         _collider.enabled = true;
+        _rb.linearVelocity = Vector2.zero;
         _rb.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionX;
     }
 }
