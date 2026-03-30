@@ -17,7 +17,6 @@ public class PlayerController : MonoBehaviour
     private UserInput _input;
     private GameObject _grabObject;
     public bool _isReverse { get; set; }
-    private bool _isRespawning = false;
 
     [SerializeField] private LayerMask grabLayer; 
     
