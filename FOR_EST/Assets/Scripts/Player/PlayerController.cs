@@ -162,6 +162,7 @@ public class PlayerController : MonoBehaviour, IRespawnable
             _status.GrabbedObject = hit.collider.GetComponent<IPullable>();
             _status.GrabbedObject.OnPull(_grabPoint);
             _status.IsGrab = true;
+            _anim.SetBool("Grab", true);
         }
     }
 
@@ -169,6 +170,7 @@ public class PlayerController : MonoBehaviour, IRespawnable
     {
         _status.GrabbedObject = null;
         _status.IsGrab = false;
+        _anim.SetBool("Grab", false);
     }
 
     public void Respawn()
