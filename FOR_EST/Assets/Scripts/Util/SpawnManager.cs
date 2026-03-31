@@ -25,12 +25,12 @@ public class SpawnManager : MonoBehaviour
     private void OnEnable()
     {
         _input.asset.Enable();
-        _input.System.Respawn.performed += OnRespawn;
+        _input.Player.Restart.performed += OnRespawn;
     }
 
     private void OnDisable()
     {
-        _input.System.Respawn.performed -= OnRespawn;
+        _input.Player.Restart.performed -= OnRespawn;
         _input.asset.Disable();
     }
 
@@ -43,7 +43,7 @@ public class SpawnManager : MonoBehaviour
     {
         _input = new UserInput();
         _respawnable = new List<IRespawnable>();
-        Spawnning();
+        SetSpawnData();
     }
 
     private void Respawn()
@@ -54,7 +54,7 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    private void Spawnning()
+    private void SetSpawnData()
     {
         SpriteRenderer[] dummys = tileMap.GetComponentsInChildren<SpriteRenderer>();
 
@@ -70,23 +70,6 @@ public class SpawnManager : MonoBehaviour
 
                 IRespawnable respawnable = spawnObj.GetComponent<IRespawnable>();
                 if (respawnable != null) _respawnable.Add(respawnable);
-                
-                if (dummy.transform.position.y < -1)
-                {
-                    //spawnObj.transform.rotation = Quaternion.Euler(0, 0, 180f);
-                    
-                    if (spawnObj.TryGetComponent<Obstacle.Obstacle>(out Obstacle.Obstacle obstacle))
-                    {
-                        obstacle._isThisObjBelongsToTheReverseWorld = true;
-                        obstacle.ReversingState();
-                    }
-                    else if (spawnObj.TryGetComponent<SadFruit>(out SadFruit sadfruit))
-                    {
-                        sadfruit._rb.gravityScale = -1;
-                    }
-
-                }
-                else if (dummy.transform.position.y > 1 && spawnObj.TryGetComponent<HappyFruit>(out HappyFruit happyFruit)) happyFruit._rb.gravityScale = 1;
                 
                 Destroy(dummy.gameObject);
             }

@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -24,18 +23,11 @@ public class PlayerController : MonoBehaviour, IRespawnable
     [SerializeField] private GameObject _reverseObjectPrefab;
     private PlayerReverseObject _reverseObjectScript;
 
-    public Animator _anim;
+    private Animator _anim;
     private SpriteRenderer _renderer;
 
     private Vector2 _spawnPos;
     private bool _isRespawning;
-    public Quaternion _spawnRot;
-
-    private bool _isSpawnInReverseState;
-    private float _reverseSpawnGravity;
-
-    private CinemachineCamera _camera;
-
 
     private void Awake()
     {
