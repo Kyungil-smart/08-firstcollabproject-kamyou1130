@@ -3,7 +3,7 @@ using TMPro;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 
-public class DialogueTest : MonoBehaviour
+public class DialogueTest : SingletonMonoBehaviour<DialogueTest>
 {
     public TMP_Text dialogueText;
 
@@ -15,10 +15,12 @@ public class DialogueTest : MonoBehaviour
     Transform currentTarget;
     int currentID;
 
-    void Start()
+    public bool IsPlay;
+
+    public void StartDialog(int value)
     {
         LoadCSV();
-        currentID = 100001; // CSV파일의 시작할 텍스트 ID를 입력해주세요.
+        currentID = value; // CSV파일의 시작할 텍스트 ID를 입력해주세요.
         ShowDialogue();
     }
 
@@ -40,6 +42,7 @@ public class DialogueTest : MonoBehaviour
             NextDialogue();
         }
     }
+
     void LoadCSV()
     {
         TextAsset csv = Resources.Load<TextAsset>("Tutorial 1"); //가져올 CSV 파일의 이름을 입력해주세요. 
@@ -53,7 +56,7 @@ public class DialogueTest : MonoBehaviour
 
             if (row.Length < 6) continue;
 
-            
+
             string idStr = row[0];
             string nextStr = row[1];
             string speaker = row[2];
@@ -69,6 +72,7 @@ public class DialogueTest : MonoBehaviour
             speakerDict[id] = speaker;
         }
     }
+
     void ShowDialogue()
     {
         if (!textDict.ContainsKey(currentID)) return;
@@ -97,6 +101,7 @@ public class DialogueTest : MonoBehaviour
         currentID = nextID;
         ShowDialogue();
     }
+
     Transform GetTargetBySpeaker(string speaker)
     {
         //Debug.Log("speaker: [" + speaker + "]");
@@ -119,12 +124,13 @@ public class DialogueTest : MonoBehaviour
 
             return go != null ? go.transform : null;
         }
+
         return null;
     }
 
     void UpdatePosition(Transform target)
-    { 
-        if(target == null) return;
+    {
+        if (target == null) return;
 
         Vector3 screenPos = Camera.main.WorldToScreenPoint(target.position + offset);
         dialogueBox.position = screenPos;
