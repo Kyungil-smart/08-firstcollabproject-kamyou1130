@@ -19,7 +19,17 @@ public class SadFruit : BaseInteractionObject
     // private Transform _playerHand;
     // private bool _isPulling = false;
 
-    private void Awake() { Init(); }
+    private void Awake()
+    {
+        base.Init();
+        if (transform.position.y < -1)
+        {
+            _rb.gravityScale = -1;
+            Vector2 scale = transform.localScale;
+            scale.y *= -1f;
+            transform.localScale = scale;
+        }
+    }
 
     // private void Update()
     // {

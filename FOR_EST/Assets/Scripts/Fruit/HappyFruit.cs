@@ -21,7 +21,15 @@ public class HappyFruit : BaseInteractionObject
 
     private void Awake()
     {
-        Init();
+        transform.rotation = Quaternion.Euler(0f, 0f, 180f);
+        base.Init();
+        if (transform.position.y > 1)
+        {
+            _rb.gravityScale = 1;
+            Vector2 scale = transform.localScale;
+            scale.y *= -1f;
+            transform.localScale = scale;
+        }
     }
 
     // private void Update()
