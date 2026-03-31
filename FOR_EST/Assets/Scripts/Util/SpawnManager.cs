@@ -67,9 +67,12 @@ public class SpawnManager : MonoBehaviour
             if (prefab.prefab != null)
             {
                 GameObject spawnObj = null;
-                if(prefab.prefab.layer == LayerMask.NameToLayer("Happy") || prefab.prefab.layer == LayerMask.NameToLayer("Sad") || prefab.prefab.layer == LayerMask.NameToLayer("Obstacle"))
+                Transform spawnTransform = dummy.transform.Find("point");
+                if (spawnTransform != null)
                 {
-                    Vector2 spawnPos = new Vector2(dummy.transform.position.x + 0.5f, dummy.transform.position.y);
+                    Debug.Log(dummy.transform.Find("point"));
+                    Vector2 spawnPos = spawnTransform.position;
+                    Debug.Log(spawnPos);
                     spawnObj = Instantiate(prefab.prefab, spawnPos, Quaternion.identity);
                 }
                 else

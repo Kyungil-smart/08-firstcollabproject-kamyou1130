@@ -33,7 +33,7 @@ public abstract class BaseInteractionObject : MonoBehaviour, IPullable, IRespawn
 
             if (dist > _linkDist)
             {
-                OnStopP();
+                OnStopPull();
             }
         }
     }
@@ -55,7 +55,7 @@ public abstract class BaseInteractionObject : MonoBehaviour, IPullable, IRespawn
         PullingState(_isPulling);
     }
 
-    public virtual void OnStopP()
+    public virtual void OnStopPull()
     {
         if (_playerHand != null)
         {
@@ -70,7 +70,7 @@ public abstract class BaseInteractionObject : MonoBehaviour, IPullable, IRespawn
     public virtual void Respawn()
     {
         if (_isRespawning) return;
-        OnStopP();
+        OnStopPull();
         _isRespawning = true;
         transform.position = _spawnPos;
         _rb.linearVelocity = Vector2.zero;

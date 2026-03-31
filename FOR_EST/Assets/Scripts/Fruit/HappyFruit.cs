@@ -52,7 +52,7 @@ public class HappyFruit : BaseInteractionObject
         {
             if (!IsGrounded())
             {
-                OnStopP();
+                OnStopPull();
                 return;
             }
 
@@ -82,9 +82,9 @@ public class HappyFruit : BaseInteractionObject
     //     _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
     // }
 
-    public override void OnStopP()
+    public override void OnStopPull()
     {
-        base.OnStopP();
+        base.OnStopPull();
         // if (_playerHand != null)
         // {
         //     var player = _playerHand.GetComponentInParent<PlayerController>();
