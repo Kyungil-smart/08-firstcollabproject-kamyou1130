@@ -69,18 +69,30 @@ public class SpawnManager : MonoBehaviour
                 GameObject spawnObj = Instantiate(prefab.prefab, dummy.transform.position, Quaternion.identity);
 
                 IRespawnable respawnable = spawnObj.GetComponent<IRespawnable>();
-                if(respawnable != null) _respawnable.Add(respawnable);
+                if (respawnable != null) _respawnable.Add(respawnable);
                 
-                if(dummy.transform.position.y < -1)
+                if (dummy.transform.position.y < -1)
                 {
                     spawnObj.transform.rotation = Quaternion.Euler(0, 0, 180f);
                     
-                    if(spawnObj.TryGetComponent<Obstacle.Obstacle>(out Obstacle.Obstacle obstacle))
+                    if (spawnObj.TryGetComponent<Obstacle.Obstacle>(out Obstacle.Obstacle obstacle))
                     {
                         obstacle._isThisObjBelongsToTheReverseWorld = true;
                         obstacle.ReversingState();
                     }
-                };
+                    else if (spawnObj.TryGetComponent<SadFruit>(out SadFruit sadfruit))
+                    {
+                        sadfruit._rb.gravityScale = -1;
+                    }
+                    else if (spawnObj.TryGetComponent<PlayerController>(out PlayerController playerController))
+                    {
+                        float gravity = -1f;
+                        bool reverseState = true;
+                        
+                        playerController.SpawnReverseState(reverseState, gravity);
+                    }
+                }
+                else if (dummy.transform.position.y > 1 && spawnObj.TryGetComponent<HappyFruit>(out HappyFruit happyFruit)) happyFruit._rb.gravityScale = 1;
                 
                 Destroy(dummy.gameObject);
             }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,10 +24,30 @@ public class PlayerController : MonoBehaviour, IRespawnable
     [SerializeField] private GameObject _reverseObjectPrefab;
     private PlayerReverseObject _reverseObjectScript;
 
-    private Animator _anim;
+    public Animator _anim;
     private SpriteRenderer _renderer;
     private Vector2 _spawnPos;
     private bool _isRespawning;
+    public Quaternion _spawnRot;
+    private CinemachineCamera  _camera; 
+    private bool _isSpawnInReverseState;
+    private float _reverseSpawnGravity;
+
+    public void SpawnReverseState(bool isReverse, float gravity)
+    {
+        _isReverse = isReverse;
+        _reverseSpawnGravity *= gravity;
+        _isSpawnInReverseState = isReverse;
+        _spawnPos = transform.position;
+        if (TryGetComponent<Rigidbody2D>(out Rigidbody2D _rb))
+        {
+            _rb.gravityScale = gravity;
+        }
+        
+        _camera.Lens.Dutch = 180f;
+        _spawnRot = isReverse ? Quaternion.Euler(0, 0, 180f) : Quaternion.identity;
+        transform.rotation = _spawnRot;
+    }
     
     private void Awake()
     {
@@ -43,6 +64,7 @@ public class PlayerController : MonoBehaviour, IRespawnable
         _anim = GetComponentInChildren<Animator>();
         _renderer = GetComponentInChildren<SpriteRenderer>();
         _spawnPos = transform.position;
+        _camera = GetComponentInChildren<CinemachineCamera>();
     }
 
     private void OnEnable()
@@ -181,10 +203,15 @@ public class PlayerController : MonoBehaviour, IRespawnable
     {
         _isRespawning = true;
 
-        if (_isReverse) _reverse.Reverse();
-        _isReverse = false;
+        // if (_isReverse) _reverse.Reverse();
+        // _isReverse = false;
+        _isReverse = _isSpawnInReverseState? true : false;
         transform.position = _spawnPos;
-        _anim.SetBool("Reverse", false);
+        if (TryGetComponent<Rigidbody2D>(out Rigidbody2D _rb))
+        {
+            _rb.gravityScale = _reverseSpawnGravity;
+        }
+        _anim.SetBool("Reverse", _isReverse);
         _status.InputAxis.Value = Vector2.zero;
         _input.asset.Disable();
 
