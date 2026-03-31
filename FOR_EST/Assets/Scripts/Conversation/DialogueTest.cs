@@ -13,14 +13,27 @@ public class DialogueTest : SingletonMonoBehaviour<DialogueTest>
     public RectTransform dialogueBox;
     public Vector3 offset;
     Transform currentTarget;
-    int currentID;
+    private int _currentID;
+    public int languageIndex = 5; // CSV파일에서 텍스트가 있는 열의 인덱스 5 : 한국어, 6: 영어, 7: 일본어
+    public const int minLang = 5;
+    public const int maxLang = 7;
 
-    public bool IsPlay;
-
-    public void StartDialog(int value)
+    public bool IsPlay { get; private set; }
+    public int CurrentID
     {
+        set => _currentID = value;
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
         LoadCSV();
-        currentID = value; // CSV파일의 시작할 텍스트 ID를 입력해주세요.
+    }
+
+    public void StartDialog(int id)
+    {
+        _currentID = id; // CSV파일의 시작할 텍스트 ID를 입력해주세요.
+        IsPlay = true;
         ShowDialogue();
     }
 
@@ -65,7 +78,7 @@ public class DialogueTest : SingletonMonoBehaviour<DialogueTest>
             if (!int.TryParse(idStr, out int id)) continue;
             if (!int.TryParse(nextStr, out int nextId)) continue;
 
-            string text = row[5];
+            string text = row[languageIndex];
 
             textDict[id] = text;
             nextDict[id] = nextId;
@@ -75,30 +88,33 @@ public class DialogueTest : SingletonMonoBehaviour<DialogueTest>
 
     void ShowDialogue()
     {
-        if (!textDict.ContainsKey(currentID)) return;
+        dialogueBox.gameObject.SetActive(true);
+        if (!textDict.ContainsKey(_currentID)) return;
 
-        dialogueText.text = textDict[currentID];
+        dialogueText.text = textDict[_currentID];
 
-        if (!speakerDict.ContainsKey(currentID)) return;
+        if (!speakerDict.ContainsKey(_currentID)) return;
 
-        string speaker = speakerDict[currentID];
+        string speaker = speakerDict[_currentID];
 
         currentTarget = GetTargetBySpeaker(speaker);
     }
 
     void NextDialogue()
     {
-        if (!nextDict.ContainsKey(currentID)) return;
+        if (!nextDict.ContainsKey(_currentID)) return;
 
-        int nextID = nextDict[currentID];
+        int nextID = nextDict[_currentID];
 
         if (nextID == 0)
         {
-            dialogueText.text = "끝!";
+            //dialogueText.text = "끝!";
+            dialogueBox.gameObject.SetActive(false);
+            IsPlay = false;
             return;
         }
 
-        currentID = nextID;
+        _currentID = nextID;
         ShowDialogue();
     }
 
@@ -109,6 +125,7 @@ public class DialogueTest : SingletonMonoBehaviour<DialogueTest>
         if (speaker == "에스트")
         {
             GameObject go = GameObject.FindGameObjectWithTag("Player");
+            //CutSceneManager.Instance.GetActior(TMP_SpriteCharacter.seed)  -> 추후 제작될 컷씬용 캐릭터 호출 방법
 
             if (go == null)
                 Debug.Log("Player 태그 못 찾음");
