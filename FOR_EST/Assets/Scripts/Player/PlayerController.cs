@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour, IRespawnable
     
     private UserInput _input;
     private GameObject _grabObject;
-    public bool _isReverse { get; set; }
+    public bool IsReverse => _status.IsReverse;
 
     [SerializeField] private LayerMask grabLayer; 
     
@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour, IRespawnable
         _reverseView = GetComponentInChildren<ReverseView>();
         _status.InputAxis.AddListener(SetDirection);
         _movement._rigidbody.gravityScale = _status.GravityScale;
-        _isReverse = false;
+        _status.IsReverse = false;
         if (_reverseObjectPrefab != null) _reverseObjectPrefab = Instantiate(_reverseObjectPrefab);
         _reverseObjectScript = _reverseObjectPrefab.GetComponent<PlayerReverseObject>();
         _anim = GetComponentInChildren<Animator>();
@@ -98,7 +98,7 @@ public class PlayerController : MonoBehaviour, IRespawnable
     {
         _reverseObjectScript.OnReverseGround();
         if (_status.IsJumping || _status.IsFalling || !_reverseObjectScript.CanReverse || !_reverseObjectScript.OnGround) return;
-        if (!_isReverse)
+        if (!_status.IsReverse)
         {
             _anim.SetBool("Reverse", true);
         }
@@ -106,7 +106,7 @@ public class PlayerController : MonoBehaviour, IRespawnable
         {
             _anim.SetBool("Reverse", false);
         }
-        _isReverse = !_isReverse; 
+        _status.IsReverse = !_status.IsReverse; 
         _reverse.Reverse();
         if (!_reverseView.IsPlayerView) _reverseView.ChangeReverseView();
         if (_status.GrabbedObject != null)
@@ -177,6 +177,8 @@ public class PlayerController : MonoBehaviour, IRespawnable
         StartCoroutine(RespawnRoutine());
     }
 
+    public PlayerStatus GetStatus => _status;
+    
     private IEnumerator RespawnRoutine()
     {
         _isRespawning = true;
