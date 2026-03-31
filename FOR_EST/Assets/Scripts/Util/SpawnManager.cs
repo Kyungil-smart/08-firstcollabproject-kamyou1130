@@ -73,7 +73,7 @@ public class SpawnManager : MonoBehaviour
                 
                 if (dummy.transform.position.y < -1)
                 {
-                    spawnObj.transform.rotation = Quaternion.Euler(0, 0, 180f);
+                    //spawnObj.transform.rotation = Quaternion.Euler(0, 0, 180f);
                     
                     if (spawnObj.TryGetComponent<Obstacle.Obstacle>(out Obstacle.Obstacle obstacle))
                     {
@@ -84,13 +84,7 @@ public class SpawnManager : MonoBehaviour
                     {
                         sadfruit._rb.gravityScale = -1;
                     }
-                    else if (spawnObj.TryGetComponent<PlayerController>(out PlayerController playerController))
-                    {
-                        float gravity = -1f;
-                        bool reverseState = true;
-                        
-                        playerController.SpawnReverseState(reverseState, gravity);
-                    }
+
                 }
                 else if (dummy.transform.position.y > 1 && spawnObj.TryGetComponent<HappyFruit>(out HappyFruit happyFruit)) happyFruit._rb.gravityScale = 1;
                 
