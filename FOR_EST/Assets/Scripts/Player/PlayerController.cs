@@ -13,25 +13,26 @@ public class PlayerController : MonoBehaviour, IRespawnable
     private PlayerMovement _movement;
     private PlayerReverse _reverse;
     private ReverseView _reverseView;
-    
+
     private UserInput _input;
     private GameObject _grabObject;
     public bool IsReverse => _status.IsReverse;
 
-    [SerializeField] private LayerMask grabLayer; 
-    
+    [SerializeField] private LayerMask grabLayer;
+
     [SerializeField] private GameObject _reverseObjectPrefab;
     private PlayerReverseObject _reverseObjectScript;
 
     private Animator _anim;
     private SpriteRenderer _renderer;
+
     private Vector2 _spawnPos;
     private bool _isRespawning;
-    
+
     private void Awake()
     {
         _input = new UserInput();
-        _movement = GetComponent<PlayerMovement>(); 
+        _movement = GetComponent<PlayerMovement>();
         _movement.Init(_status);
         _reverse = GetComponent<PlayerReverse>();
         _reverseView = GetComponentInChildren<ReverseView>();
@@ -43,6 +44,11 @@ public class PlayerController : MonoBehaviour, IRespawnable
         _anim = GetComponentInChildren<Animator>();
         _renderer = GetComponentInChildren<SpriteRenderer>();
         _spawnPos = transform.position;
+
+        _isReverse = transform.position.y < 0;
+        _movement._rigidbody.gravityScale = _status.GravityScale * (_isReverse ? -1 : 1);
+        transform.localScale *= new Vector2(1f, _isReverse ? -1 : 1);
+        _anim.SetBool("Reverse", _isReverse);
     }
 
     private void OnEnable()
@@ -71,12 +77,12 @@ public class PlayerController : MonoBehaviour, IRespawnable
     private void OnMove(InputAction.CallbackContext ctx)
     {
         if (!_reverseView.IsPlayerView) return;
-        
+
         _status.InputAxis.Value = ctx.ReadValue<Vector2>();
 
-        if (_status.InputAxis.Value.x < 0) 
+        if (_status.InputAxis.Value.x < 0)
             _renderer.flipX = true;
-        else 
+        else
             _renderer.flipX = false;
     }
 
@@ -88,7 +94,7 @@ public class PlayerController : MonoBehaviour, IRespawnable
     private void OnJump(InputAction.CallbackContext ctx)
     {
         if (_status.IsJumping || _status.IsFalling || !_reverseView.IsPlayerView) return;
-        
+
         _anim.SetBool("Jump", true);
         _movement.ChangeJumpState(_movement.Jumping);
     }
@@ -151,17 +157,19 @@ public class PlayerController : MonoBehaviour, IRespawnable
     {
         if (_status.IsGrab) //대화 시 잡기 상태를 해제해야 대화 가능
         {
-            _status.GrabbedObject.OnStopP();
+            _status.GrabbedObject.OnStopPull();
             OffGrab();
             return;
         }
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right * (_status.IsRight ? 1 : -1), 0.5f, grabLayer);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right * (_status.IsRight ? 1 : -1), 0.5f,
+            grabLayer);
         if (hit.collider && hit.collider.CompareTag("Obstacle"))
         {
             _status.GrabbedObject = hit.collider.GetComponent<IPullable>();
             _status.GrabbedObject.OnPull(_grabPoint);
             _status.IsGrab = true;
+            _anim.SetBool("Grab", true);
         }
     }
 
@@ -169,27 +177,24 @@ public class PlayerController : MonoBehaviour, IRespawnable
     {
         _status.GrabbedObject = null;
         _status.IsGrab = false;
+        _anim.SetBool("Grab", false);
     }
 
-    public void Respawn()
+    public void Respawn() //r키 눌렸을 때.
     {
         if (_isRespawning) return;
-        StartCoroutine(RespawnRoutine());
-    }
-
-    public PlayerStatus GetStatus => _status;
-    
-    private IEnumerator RespawnRoutine()
-    {
         _isRespawning = true;
+        
+        bool _spawnReverse = _spawnPos.y < 0;
+        _movement._rigidbody.gravityScale = _status.GravityScale * (_spawnReverse ? -1 : 1);
+        transform.localScale = new Vector2(transform.localScale.x * 1f, Mathf.Abs(transform.localScale.y) * (_spawnReverse ? -1 : 1));
+        _anim.SetBool("Reverse", _spawnReverse);
 
+        _isReverse = _spawnReverse;
         transform.position = _spawnPos;
+
         _status.InputAxis.Value = Vector2.zero;
-        _input.asset.Disable();
-
-        yield return YieldContainer.WaitForSeconds(1f);
-
-        _input.asset.Enable();
+        
         _isRespawning = false;
     }
 }
