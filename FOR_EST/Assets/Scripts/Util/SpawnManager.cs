@@ -66,8 +66,20 @@ public class SpawnManager : MonoBehaviour
 
             if (prefab.prefab != null)
             {
-                GameObject spawnObj = Instantiate(prefab.prefab, dummy.transform.position, Quaternion.identity);
-
+                GameObject spawnObj = null;
+                Transform spawnTransform = dummy.transform.Find("point");
+                if (spawnTransform != null)
+                {
+                    Debug.Log(dummy.transform.Find("point"));
+                    Vector2 spawnPos = spawnTransform.position;
+                    Debug.Log(spawnPos);
+                    spawnObj = Instantiate(prefab.prefab, spawnPos, Quaternion.identity);
+                }
+                else
+                {
+                    spawnObj = Instantiate(prefab.prefab, dummy.transform.position, Quaternion.identity);
+                }
+                
                 IRespawnable respawnable = spawnObj.GetComponent<IRespawnable>();
                 if (respawnable != null) _respawnable.Add(respawnable);
                 

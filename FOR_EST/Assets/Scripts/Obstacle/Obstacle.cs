@@ -50,7 +50,7 @@ namespace Obstacle
                 
                 _rb.MovePosition(new Vector2(followTarget, _rb.position.y));
                 
-                if (!_isReversing && !IsGrounded()) base.OnStopP();
+                if (!_isReversing && !IsGrounded()) base.OnStopPull();
             }
         }
         
@@ -58,7 +58,8 @@ namespace Obstacle
         {
             if (other.gameObject.CompareTag("Boundary"))
             {
-                Respawn();
+                OnStopPull();
+                StartCoroutine(RespawnRoutine());
             }
         }
 
@@ -106,8 +107,13 @@ namespace Obstacle
             transform.localScale = scale;
         }
 
+        public override void Respawn()
+        {
+            base.Respawn();
+            _rb.gravityScale = _originalGravity;
+        }
 
-        public override IEnumerator RespawnRoutine()
+        public IEnumerator RespawnRoutine()
         {
             _isRespawning = true;
             base.RespawningState(false);
