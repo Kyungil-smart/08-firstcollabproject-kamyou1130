@@ -111,7 +111,7 @@ MonoBehaviour:
   _groundDistance: 0.05
   _groundSizeX: 1.02
   _rb: {fileID: 0}
-  _pivot: {x: 0.1, y: 0}
+  _pivot: {x: 0, y: 0}
   _isThisObjBelongsToTheReverseWorld: 0
   _reverseObjectPrefab: {fileID: 5759015643564159108, guid: 7337699255f2b9b4eb7fa4cd689255b2, type: 3}
   _riseT: 0.3
