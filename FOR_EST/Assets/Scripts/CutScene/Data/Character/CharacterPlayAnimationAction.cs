@@ -12,6 +12,7 @@ namespace CutScene
         }
         public string character;
         public string animation;
+        public bool TrueAndFalse;
         public override void InitAction()
         {
             Debug.Log($"{GetType()} : 시작");
@@ -24,7 +25,7 @@ namespace CutScene
 
         public override IEnumerator PlayActionRoutine()
         {
-            CutSceneManager.Instance.Player.SetAnimation(animation);
+            CutSceneManager.Instance.Player.SetAnimation(animation, TrueAndFalse);
             while (CutSceneManager.Instance.Player.DoAction)
             {
                 

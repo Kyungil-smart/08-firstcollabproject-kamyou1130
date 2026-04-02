@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour, IRespawnable
         _status.IsReverse = false;
         if (_reverseObjectPrefab != null) _reverseObjectPrefab = Instantiate(_reverseObjectPrefab);
         _reverseObjectScript = _reverseObjectPrefab.GetComponent<PlayerReverseObject>();
+        _reverseObjectScript.Init(this);
         _anim = GetComponentInChildren<Animator>();
         _renderer = GetComponentInChildren<SpriteRenderer>();
         _spawnPos = transform.position;
