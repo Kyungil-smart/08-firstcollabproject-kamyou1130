@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace CutScene

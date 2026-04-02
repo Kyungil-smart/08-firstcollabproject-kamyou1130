@@ -6,7 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/LevelDesign/StageT.unity
+    path: Assets/Scenes/TitleScene_SHY.unity
+    guid: ac1096d38ef2485498adb61c7371edaa
+  - enabled: 1
+    path: Assets/Scenes/LevelDesign/Stage T.unity
     guid: 951cbb0fcbc966e46b3d0c6c92ff427f
   - enabled: 1
     path: Assets/Scenes/LevelDesign/Stage1.unity
