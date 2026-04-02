@@ -349,7 +349,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &676475130
 SpriteRenderer:
   serializedVersion: 2
@@ -437,7 +437,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FruitShineEffect
   isSadFruit: 1
-  ellipseRatio: 0.85
+  ellipseRatio: 0.95
   textureResolution: 128
   effectScale: 2
   rotationSpeed: 35
@@ -530,7 +530,7 @@ Transform:
   m_GameObject: {fileID: 682440533}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 35.3, y: -0.42, z: -10}
+  m_LocalPosition: {x: 21.2, y: -0.3, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -828,7 +828,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RainSplashSpawner
   splashPrefab: {fileID: 4018795644546498810, guid: 06c1f383f0b58094f9dccc5a73d89340, type: 3}
   splashRate: 33.5
-  groundY: 0
+  groundY: 0.5
   halfWidth: 42
   yJitter: 0.05
 --- !u!4 &686604025
@@ -863,7 +863,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &974743569
 SpriteRenderer:
   serializedVersion: 2
@@ -951,12 +951,80 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FruitShineEffect
   isSadFruit: 1
-  ellipseRatio: 0.85
+  ellipseRatio: 0.95
   textureResolution: 128
   effectScale: 2
   rotationSpeed: 35
   sortingOrder: 3
   sortingLayerName: Default
+--- !u!1 &1062952159
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1062952161}
+  - component: {fileID: 1062952160}
+  m_Layer: 0
+  m_Name: WaterBoundaryEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1062952160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062952159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b771bd3ea67f91d4aa2c2af1db3a5260, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WaterBoundaryEffect
+  _boundaryY: 0
+  _halfWidth: 42
+  _splashRate: 18
+  _splashSpeedMin: 1.5
+  _splashSpeedMax: 3.5
+  _splashXSpread: 1.2
+  _splashGravity: 9
+  _splashLifetime: 0.55
+  _splashColor: {r: 0.55, g: 0.75, b: 1, a: 0.75}
+  _splashWidth: 0.035
+  _splashHeight: 0.1
+  _splashPoolSize: 200
+  _bubbleRate: 12
+  _bubbleSinkSpeed: 0.6
+  _bubbleWobbleSpeed: 3
+  _bubbleWobbleAmount: 0.08
+  _bubbleLifetime: 1
+  _bubbleSpawnDepth: 0.7
+  _bubbleColor: {r: 0.75, g: 0.92, b: 1, a: 0.65}
+  _bubbleSizeMin: 0.13
+  _bubbleSizeMax: 0.26
+  _bubblePoolSize: 120
+  _sortingLayerName: Default
+  _sortingOrder: 11
+--- !u!4 &1062952161
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062952159}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1076878353
 GameObject:
   m_ObjectHideFlags: 0
@@ -1779,6 +1847,7 @@ SceneRoots:
   - {fileID: 682440536}
   - {fileID: 1981981689}
   - {fileID: 686604025}
+  - {fileID: 1062952161}
   - {fileID: 1498592550}
   - {fileID: 3180778646664639235}
   - {fileID: 242729570}
