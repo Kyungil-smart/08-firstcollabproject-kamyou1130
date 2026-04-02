@@ -3423,18 +3423,6 @@ PrefabInstance:
       propertyPath: tileMap
       value: 
       objectReference: {fileID: 1307092341}
-    - target: {fileID: 2220191012763933397, guid: d78c7577f7f3c5340ac1b7d49ebb2cd6, type: 3}
-      propertyPath: spawnPrefabs.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2220191012763933397, guid: d78c7577f7f3c5340ac1b7d49ebb2cd6, type: 3}
-      propertyPath: spawnPrefabs.Array.data[5].layer
-      value: Seed
-      objectReference: {fileID: 0}
-    - target: {fileID: 2220191012763933397, guid: d78c7577f7f3c5340ac1b7d49ebb2cd6, type: 3}
-      propertyPath: spawnPrefabs.Array.data[5].prefab
-      value: 
-      objectReference: {fileID: 8075747661688724076, guid: 1adf5cd7b0289e74ea6f91b2b3fe5668, type: 3}
     - target: {fileID: 6235013264145483079, guid: d78c7577f7f3c5340ac1b7d49ebb2cd6, type: 3}
       propertyPath: m_Name
       value: SpawnManager
@@ -4853,7 +4841,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 791823387809810578, guid: 179e5f382dafb654695a3a547918d0b8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
