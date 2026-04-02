@@ -53,9 +53,9 @@ public class PlayerCutSceneController : MonoBehaviour, ICutsceneObject
         _renderer.flipX = !isRight;
     }
 
-    public void SetAnimation(string anim) //연출 세팅 필요
+    public void SetAnimation(string anim, bool tnf) //연출 세팅 필요
     {
-        _anim.CrossFade(anim, 0.0f);
+        _anim.SetBool(anim, tnf);
     }
 
     //연출 중 이동
