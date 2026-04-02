@@ -10,24 +10,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7a528ccd6b0a70c42ade31bfd67dec88, type: 3}
-  m_Name: Stage1-S
+  m_Name: Stage2-E
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioSO
   PlayerData:
-    rid: -2
+    ShowCharacter: 1
+    GetInGamePosition: 0
+    position: {x: 10, y: 5}
+    isRight: 0
   SeedData:
-    rid: -2
+    ShowCharacter: 0
+    GetInGamePosition: 0
+    position: {x: 0, y: 0}
+    isRight: 0
   SeedBData:
-    rid: -2
+    ShowCharacter: 0
+    GetInGamePosition: 0
+    position: {x: 0, y: 0}
+    isRight: 0
   ActionList:
-  - rid: 7021410910219010254
+  - rid: 7021410910219010349
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 7021410910219010254
-      type: {class: CharacterReverseAction, ns: CutScene, asm: Assembly-CSharp}
+    - rid: 7021410910219010349
+      type: {class: FadeOutAction, ns: CutScene, asm: Assembly-CSharp}
       data:
-        _actionType: 3
+        _actionType: 8
         NextType: 1
-        character: 
+        time: 2
