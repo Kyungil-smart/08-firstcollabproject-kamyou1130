@@ -4,20 +4,31 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 using CutScene;
+using UnityEditor.UIElements;
+using UnityEngine.TextCore.Text;
 
 [CustomEditor(typeof(ScenarioSO))]
 public class ScenarioSOEditor : Editor
 {
-    private SerializedProperty temp;
+    private SerializedProperty _actionsProperty;
+    private SerializedProperty _estProperty;
+    private SerializedProperty _seedProperty;
+    private SerializedProperty _seedBProperty;
+    
+    
     private ReorderableList _actionList;
 
     private void OnEnable()
     {
-        temp = serializedObject.FindProperty("ActionList");
-        _actionList = new ReorderableList(serializedObject, temp, true, true, true, true);
+        _actionsProperty = serializedObject.FindProperty("ActionList");
+        _estProperty = serializedObject.FindProperty("PlayerData");
+        _seedProperty = serializedObject.FindProperty("SeedData");
+        _seedBProperty = serializedObject.FindProperty("SeedBData");
+        
+        _actionList = new ReorderableList(serializedObject, _actionsProperty, true, true, true, true);
         _actionList.elementHeightCallback = (index) =>
         {
-            var element = temp.GetArrayElementAtIndex(index);
+            var element = _actionsProperty.GetArrayElementAtIndex(index);
             if (element.isExpanded)
                 return EditorGUI.GetPropertyHeight(element, true) + 10;
             else
@@ -25,7 +36,7 @@ public class ScenarioSOEditor : Editor
         };
         _actionList.drawElementCallback = (Rect rect, int index, bool isActive, bool isFocused) =>
         {
-            var element = temp.GetArrayElementAtIndex(index);
+            var element = _actionsProperty.GetArrayElementAtIndex(index);
             float lineHeight = EditorGUIUtility.singleLineHeight;
 
             SerializedProperty nameProp = element.FindPropertyRelative("_actionType");
@@ -62,9 +73,9 @@ public class ScenarioSOEditor : Editor
                 menu.AddItem(new GUIContent(GetEnumInspectorName((EActions)i)), false, () =>
                 {
                     serializedObject.Update(); //새로 추가할 때 함수.
-                    int index = temp.arraySize;
-                    temp.InsertArrayElementAtIndex(index);
-                    temp.GetArrayElementAtIndex(index).managedReferenceValue = CreateActionInstance((EActions)i1);
+                    int index = _actionsProperty.arraySize;
+                    _actionsProperty.InsertArrayElementAtIndex(index);
+                    _actionsProperty.GetArrayElementAtIndex(index).managedReferenceValue = CreateActionInstance((EActions)i1);
                     serializedObject.ApplyModifiedProperties();
                 });
             }
@@ -76,7 +87,10 @@ public class ScenarioSOEditor : Editor
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
-
+        EditorGUILayout.LabelField("연출 초기 설정");
+        EditorGUILayout.PropertyField(_estProperty, new GUIContent("에스트 설정"), true);
+        EditorGUILayout.PropertyField(_seedProperty, new GUIContent("시드 설정"), true);
+        EditorGUILayout.PropertyField(_seedBProperty, new GUIContent("시드콩 설정"), true);
         _actionList.DoLayoutList();
 
         serializedObject.ApplyModifiedProperties();
