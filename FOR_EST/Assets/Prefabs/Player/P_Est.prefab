@@ -305,7 +305,6 @@ MonoBehaviour:
     InputAxis:
       _data: {x: 0, y: 0}
     MoveSpeed: 200
-    PushSpeed: 0
     JumpPower: 5
     GravityScale: 3
   _grabPoint: {fileID: 7449944866376114759}
@@ -400,8 +399,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
   Priority:
-    Enabled: 0
-    m_Value: 0
+    Enabled: 1
+    m_Value: 10
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20241001
