@@ -13,11 +13,20 @@ MonoBehaviour:
   m_Name: Stage1-1
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioSO
   PlayerData:
-    rid: -2
+    ShowCharacter: 0
+    GetInGamePosition: 0
+    position: {x: 0, y: 0}
+    isRight: 0
   SeedData:
-    rid: -2
+    ShowCharacter: 0
+    GetInGamePosition: 0
+    position: {x: 0, y: 0}
+    isRight: 0
   SeedBData:
-    rid: -2
+    ShowCharacter: 0
+    GetInGamePosition: 0
+    position: {x: 0, y: 0}
+    isRight: 0
   ActionList:
   - rid: 7021410910219010222
   - rid: 7021410910219010224
@@ -27,8 +36,6 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
     - rid: 3650131893831598258
       type: {class: FadeOutAction, ns: CutScene, asm: Assembly-CSharp}
       data:

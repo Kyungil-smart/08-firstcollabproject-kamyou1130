@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class PlayerCutSceneController : MonoBehaviour
+public class PlayerCutSceneController : MonoBehaviour, ICutsceneObject
 {
     [SerializeField] private PlayerStatus _status = new PlayerStatus();
 
