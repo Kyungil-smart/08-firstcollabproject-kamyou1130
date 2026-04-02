@@ -24972,6 +24972,8 @@ GameObject:
   - component: {fileID: 1650359072}
   - component: {fileID: 1650359074}
   - component: {fileID: 1650359073}
+  - component: {fileID: 1650359076}
+  - component: {fileID: 1650359075}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -24997,7 +24999,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 80, y: 100}
-  m_SizeDelta: {x: 400, y: 70}
+  m_SizeDelta: {x: 0, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1650359073
 MonoBehaviour:
@@ -25037,6 +25039,46 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1650359071}
   m_CullTransparentMesh: 1
+--- !u!114 &1650359075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1650359071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
+  m_HorizontalFit: 2
+  m_VerticalFit: 0
+--- !u!114 &1650359076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1650359071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.HorizontalLayoutGroup
+  m_Padding:
+    m_Left: 20
+    m_Right: 20
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 4
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 1
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!4 &1650687830 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6681157866014351456, guid: d9a24ce0a48448446b40c2ea2efcfa1e, type: 3}
@@ -28618,10 +28660,6 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 4b4bd5ee-7082-4a5c-a3ea-21b8baa9883d
     m_ActionName: 'Player/NextDialogue[/Keyboard/g]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 0b934b5c-a609-4717-ac46-21992340d0a2
-    m_ActionName: 'System/Respawn[/Keyboard/r]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -28669,10 +28707,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1650359072}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 50}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1986916805
 MonoBehaviour:
@@ -28694,7 +28732,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB0B4\uAC00 \uB9D0\uD48D\uC120\uC774\uC57C!!!!"
+  m_text: "\uB0B4\uAC00 \uB9D0\uD48D\uC120\uC785\uB2C8da."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 34196699a08dcc744a0fb7826815ce76, type: 2}
   m_sharedMaterial: {fileID: -7585249650060191515, guid: 34196699a08dcc744a0fb7826815ce76, type: 2}
@@ -28721,10 +28759,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 42.85
+  m_fontSize: 32
   m_fontSizeBase: 32
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
