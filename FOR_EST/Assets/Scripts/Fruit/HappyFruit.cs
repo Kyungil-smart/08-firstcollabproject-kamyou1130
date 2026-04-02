@@ -21,7 +21,7 @@ public class HappyFruit : BaseInteractionObject
 
     private void Awake()
     {
-        transform.rotation = Quaternion.Euler(0f, 0f, 180f);
+        // transform.rotation = Quaternion.Euler(0f, 0f, 180f);
         base.Init();
         if (transform.position.y > 1)
         {
