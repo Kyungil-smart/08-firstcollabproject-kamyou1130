@@ -13,54 +13,36 @@ MonoBehaviour:
   m_Name: StageT-1
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioSO
   PlayerData:
+    character: 0
     ShowCharacter: 0
     GetInGamePosition: 0
     position: {x: 0, y: 0}
     isRight: 0
   SeedData:
+    character: 1
     ShowCharacter: 0
     GetInGamePosition: 0
     position: {x: 0, y: 0}
     isRight: 0
   SeedBData:
+    character: 2
     ShowCharacter: 0
     GetInGamePosition: 0
     position: {x: 0, y: 0}
     isRight: 0
+  CameraData:
+    followTarget: 0
+    target: 0
+    position: {x: 0, y: 0}
+    zoom: 0
+  BackgroundImage: []
+  ImageResource: []
   ActionList:
   - rid: 7021410910219010222
-  - rid: 7021410910219010224
-  - rid: 7021410910219010226
-  - rid: 3650131893831598258
-  - rid: 7021410910219010228
   references:
     version: 2
     RefIds:
-    - rid: 3650131893831598258
-      type: {class: FadeOutAction, ns: CutScene, asm: Assembly-CSharp}
-      data:
-        _actionType: 8
-        NextType: 1
-        time: 0.5
     - rid: 7021410910219010222
-      type: {class: FadeInAction, ns: CutScene, asm: Assembly-CSharp}
-      data:
-        _actionType: 7
-        NextType: 1
-        time: 0.5
-    - rid: 7021410910219010224
-      type: {class: FadeOutAction, ns: CutScene, asm: Assembly-CSharp}
-      data:
-        _actionType: 8
-        NextType: 1
-        time: 0.5
-    - rid: 7021410910219010226
-      type: {class: FadeInAction, ns: CutScene, asm: Assembly-CSharp}
-      data:
-        _actionType: 7
-        NextType: 1
-        time: 0.5
-    - rid: 7021410910219010228
       type: {class: FadeInAction, ns: CutScene, asm: Assembly-CSharp}
       data:
         _actionType: 7

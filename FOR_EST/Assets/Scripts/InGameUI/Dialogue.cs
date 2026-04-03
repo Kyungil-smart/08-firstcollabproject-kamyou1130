@@ -5,12 +5,12 @@ using UnityEngine.InputSystem;
 
 public class DialogueTest : SingletonMonoBehaviour<DialogueTest>
 {
+    public RectTransform dialogueBox;
     public TMP_Text dialogueText;
-
+    private GameObject _textBox;
     Dictionary<int, string> textDict = new Dictionary<int, string>();
     Dictionary<int, int> nextDict = new Dictionary<int, int>();
     Dictionary<int, string> speakerDict = new Dictionary<int, string>();
-    public RectTransform dialogueBox;
     public Vector3 offset;
     Transform currentTarget;
     private int _currentID;
@@ -28,6 +28,15 @@ public class DialogueTest : SingletonMonoBehaviour<DialogueTest>
     {
         base.Awake();
         LoadCSV();
+    }
+
+    public void CreateTextBox()
+    {
+        _textBox = Resources.Load<GameObject>("DialogueBox");
+        _textBox = Instantiate(_textBox);
+
+        dialogueBox = _textBox.GetComponentInChildren<RectTransform>();
+        dialogueText = dialogueBox.GetComponentInChildren<TMP_Text>();
     }
 
     public void StartDialog(int id)
