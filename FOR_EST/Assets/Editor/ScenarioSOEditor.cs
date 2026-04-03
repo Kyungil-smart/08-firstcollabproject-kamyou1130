@@ -14,7 +14,6 @@ public class ScenarioSOEditor : Editor
     private SerializedProperty _seedProperty;
     private SerializedProperty _seedBProperty;
     private SerializedProperty _cameraProperty;
-    private SerializedProperty _bgListProperty;
     private SerializedProperty _imgListProperty;
     
     private ReorderableList _actionList;
@@ -29,7 +28,6 @@ public class ScenarioSOEditor : Editor
         _seedBProperty = serializedObject.FindProperty("SeedBData");
         _cameraProperty = serializedObject.FindProperty("CameraData");
         
-        _bgListProperty = serializedObject.FindProperty("BackgroundImage");
         _imgListProperty = serializedObject.FindProperty("ImageResource");
         
         _actionList = new ReorderableList(serializedObject, _actionsProperty, true, true, true, true);
@@ -97,7 +95,7 @@ public class ScenarioSOEditor : Editor
         EditorGUILayout.PropertyField(_seedProperty, new GUIContent("시드 설정"), true);
         EditorGUILayout.PropertyField(_seedBProperty, new GUIContent("시드콩 설정"), true);
         EditorGUILayout.PropertyField(_cameraProperty, new GUIContent("카메라 설정"), true);
-        EditorGUILayout.PropertyField(_bgListProperty, new GUIContent("배경 설정"), true);
+        
         EditorGUILayout.PropertyField(_imgListProperty, new GUIContent("이미지 설정(준비중)"), true);
             
         _actionList.DoLayoutList();

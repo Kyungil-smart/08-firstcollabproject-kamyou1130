@@ -8,7 +8,7 @@ public class CutSceneManager : SingletonMonoBehaviour<CutSceneManager>
     private Dictionary<string, ScenarioSO> Scenarios = new();
     [SerializeField] private ScenarioSO testSO;
 
-    private ScenarioSO CurrentScenario;
+    public ScenarioSO CurrentScenario { get; private set; }
 
     // 컷씬용 오브젝트
     private GameObject CutSceneObjects;
@@ -78,14 +78,6 @@ public class CutSceneManager : SingletonMonoBehaviour<CutSceneManager>
         Seed_B = Instantiate(go, new Vector2(3f, 0.5f), Quaternion.identity)
             .GetComponent<PlayerCutSceneController>();
         Seed_B.Init(pc.GetStatus);
-    }
-
-    private void Update()
-    {
-        foreach (var act in CurrentActions)
-        {
-            act.Update();
-        }
     }
 
     //스테이지 명을 기준으로 시나리오를 호출하도록...
@@ -165,7 +157,6 @@ public class CutSceneManager : SingletonMonoBehaviour<CutSceneManager>
         CurrentActionsIndex = 0;
         if (Scenarios.ContainsKey(cutSceneName))
         {
-            Debug.Log($"{cutSceneName} 실행");
             CurrentScenario = Scenarios[cutSceneName];
             EnableCutsceneMode();
             IsPlayCutscene.Value = true;
@@ -197,7 +188,6 @@ public class CutSceneManager : SingletonMonoBehaviour<CutSceneManager>
         while (true)
         {
             BaseAction curAction = CurrentScenario.ActionList[CurrentActionsIndex];
-            Debug.Log($"{CurrentActionsIndex} : {curAction.GetType()}");
             CurrentActions.Add(curAction); //현재 액션 추가
             CurrentActionsIndex++; //인덱스 추가
             _currentActionsCount++;
@@ -213,7 +203,6 @@ public class CutSceneManager : SingletonMonoBehaviour<CutSceneManager>
     {
         for (int i = 0; i < CurrentActions.Count; i++)
         {
-            CurrentActions[i].InitAction();
             StartCoroutine(CurrentActions[i].PlayActionRoutine());
         }
     }
@@ -234,8 +223,6 @@ public class CutSceneManager : SingletonMonoBehaviour<CutSceneManager>
         cutSceneObj.SetDirection(data.isRight);
 
         cutSceneObj.gameObject.SetActive(data.ShowCharacter);
-        
-        Debug.Log($"{data.GetType()} : 세팅완료 {cutSceneObj.transform.position} / {(data.isRight ? "오른쪽" : "왼쪽")} / {(data.ShowCharacter?"나타남" : "가림")}");
     }
 
     public void SetCamera(CameraCutsceneData data)
@@ -263,8 +250,7 @@ public class CutSceneManager : SingletonMonoBehaviour<CutSceneManager>
             CutsceneCamera.transform.position = data.position;
         }
             
-        CutsceneCamera.Lens.OrthographicSize = data.zoom;
-        Debug.Log($"카메라 세팅완료 {CutsceneCamera.transform.position} / Zoom : {data.zoom}");
+        CutsceneCamera.Lens.OrthographicSize = data.zoom < 1 ? 1 : data.zoom;
     }
 
     public PlayerCutSceneController GetCharacter(ESelectedCharacter character)
