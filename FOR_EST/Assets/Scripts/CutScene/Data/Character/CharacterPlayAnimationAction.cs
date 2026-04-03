@@ -10,8 +10,9 @@ namespace CutScene
         {
             _actionType = EActions.CharacterPlayAnimation;
         }
-        public string character;
+        public ESelectedCharacter character;
         public string animation;
+        public bool TrueAndFalse;
         public override void InitAction()
         {
             Debug.Log($"{GetType()} : 시작");
@@ -24,8 +25,8 @@ namespace CutScene
 
         public override IEnumerator PlayActionRoutine()
         {
-            CutSceneManager.Instance.Player.SetAnimation(animation);
-            while (CutSceneManager.Instance.Player.DoAction)
+            CutSceneManager.Instance.GetCharacter(character).SetAnimation(animation, TrueAndFalse);
+            while (CutSceneManager.Instance.GetCharacter(character).DoAction)
             {
                 
             }

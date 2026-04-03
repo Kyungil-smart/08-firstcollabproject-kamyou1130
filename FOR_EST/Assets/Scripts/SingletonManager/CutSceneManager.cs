@@ -9,7 +9,9 @@ public class CutSceneManager : SingletonMonoBehaviour<CutSceneManager>
 {
     private Dictionary<string, ScenarioSO> Scenarios = new();
     [SerializeField] private ScenarioSO testSO;
+
     private ScenarioSO CurrentScenario;
+
     // 컷씬용 오브젝트
     private GameObject CutSceneObjects;
 
@@ -23,13 +25,12 @@ public class CutSceneManager : SingletonMonoBehaviour<CutSceneManager>
     public PlayerCutSceneController Player { get; private set; }
 
     // 연출 NPC 시드
-    public GameObject Seed { get; private set; }
+    public PlayerCutSceneController Seed { get; private set; }
 
     // 연출 NPC 시드콩
-    public GameObject Seed_B { get; private set; }
+    public PlayerCutSceneController Seed_B { get; private set; }
 
     public ObserveValue<bool> IsPlayCutscene = new();
-
 
 
     //SO에서 현재 실행중인 액션.
@@ -46,13 +47,15 @@ public class CutSceneManager : SingletonMonoBehaviour<CutSceneManager>
     {
         base.Awake();
         InitPrefabs();
-        
     }
 
     private void Start()
     {
-        LoadScenario("StageT");
-        PlayCutscene("Start");
+        if (Scenarios.Count == 0)
+        {
+            Scenarios["test"] = testSO;
+            PlayCutscene("test");
+        }
     }
 
     private void InitPrefabs()
@@ -69,8 +72,14 @@ public class CutSceneManager : SingletonMonoBehaviour<CutSceneManager>
         CutsceneCamera = Instantiate(go, transform).GetComponent<CinemachineCamera>();
         go = Resources.Load<GameObject>("Prefab/Cutscene/CutSceneCanvas");
         CinemaUI = Instantiate(go, transform).GetComponent<CutsceneUIController>();
-        Seed = Instantiate(Resources.Load<GameObject>("Prefab/Cutscene/N_Seed_Cutscene"), new Vector2(-0.73f, 1.12f), Quaternion.identity);
-        Seed_B = Instantiate(Resources.Load<GameObject>("Prefab/Cutscene/N_Seed_B_Cutscene"), new Vector2(-5.21f, 0.72f), Quaternion.identity);
+        go = Resources.Load<GameObject>("Prefab/Cutscene/N_Seed_Cutscene");
+        Seed = Instantiate(go, new Vector2(-3f, 0.5f), Quaternion.identity)
+            .GetComponent<PlayerCutSceneController>();
+        Seed.Init(pc.GetStatus);
+        go = Resources.Load<GameObject>("Prefab/Cutscene/N_Seed_B_Cutscene");
+        Seed_B = Instantiate(go, new Vector2(3f, 0.5f), Quaternion.identity)
+            .GetComponent<PlayerCutSceneController>();
+        Seed_B.Init(pc.GetStatus);
     }
 
     private void Update()
@@ -88,7 +97,7 @@ public class CutSceneManager : SingletonMonoBehaviour<CutSceneManager>
         foreach (var d in datas)
         {
             string name;
-            switch (d.name[d.name.Length-1])
+            switch (d.name[d.name.Length - 1])
             {
                 case 'S':
                     name = "Start";
@@ -103,14 +112,12 @@ public class CutSceneManager : SingletonMonoBehaviour<CutSceneManager>
 
             Scenarios[name] = d;
         }
-        
     }
 
     public void UnLoadScenario()
     {
         Scenarios.Clear();
     }
-
 
 
     /// <summary>
@@ -126,6 +133,7 @@ public class CutSceneManager : SingletonMonoBehaviour<CutSceneManager>
             mainCamera.cullingMask = cutsceneMask;
         }
 
+        SetCharacter(Player.gameObject, pc.gameObject, CurrentScenario.PlayerData);
     }
 
     private void DisableCutsceneMode()
@@ -134,31 +142,28 @@ public class CutSceneManager : SingletonMonoBehaviour<CutSceneManager>
         {
             mainCamera.cullingMask = beforeMask;
         }
+
         CutsceneCamera.Priority = 9;
         //연출 종료 설정
         //if(CurrentScenario.Player.SetInGamePosition)
         //realPlayer.transform.position = Player.transform.position;
         pc.gameObject.SetActive(true);
     }
-    
+
     public void PlayCutscene(string cutSceneName)
     {
         if (CurrentScenario != null) return; //현재 실행중 시나리오가 있는지
-        if(!mainCamera)
+        if (!mainCamera)
             mainCamera = Camera.main;
-        if(!pc)
+        if (!pc)
             pc = FindAnyObjectByType<PlayerController>();
-        if (Scenarios.Count == 0)
-            CurrentScenario = testSO;
+
         //컷씬 so 세팅.
         CurrentActionsIndex = 0;
         if (Scenarios.ContainsKey(cutSceneName))
         {
             Debug.Log($"{cutSceneName} 실행");
             CurrentScenario = Scenarios[cutSceneName];
-            SetCharacter(Player.gameObject, pc.gameObject, CurrentScenario.PlayerData);
-            //SetCharacter(Player.gameObject, pc.gameObject, CurrentScenario.PlayerData);
-            //SetCharacter(Player.gameObject, pc.gameObject, CurrentScenario.PlayerData);
             EnableCutsceneMode();
             IsPlayCutscene.Value = true;
             SetNextCut();
@@ -167,7 +172,6 @@ public class CutSceneManager : SingletonMonoBehaviour<CutSceneManager>
         {
             Debug.Log("실행할 시나리오 없음.");
         }
-        
     }
 
     public void EndCutscene()
@@ -176,7 +180,7 @@ public class CutSceneManager : SingletonMonoBehaviour<CutSceneManager>
         CurrentScenario = null;
         DisableCutsceneMode();
     }
-    
+
 
     private void SetNextCut()
     {
@@ -224,15 +228,29 @@ public class CutSceneManager : SingletonMonoBehaviour<CutSceneManager>
         if (data.GetInGamePosition)
         {
             obj?.SetPosition(inGameObj.transform.position);
-            //cutSceneObj.SetDirection(); // 실제 플레이어의 방향 가져오기.
+            //obj?.SetDirection(inGameObj.GetComponent<IStatus>().IsRight); // 실제 플레이어의 방향 가져오기.
         }
         else
         {
             obj?.SetPosition(data.position);
             obj?.SetDirection(data.isRight);
         }
+
         cutSceneObj.gameObject.SetActive(data.ShowCharacter);
     }
 
-
+    public PlayerCutSceneController GetCharacter(ESelectedCharacter character)
+    {
+        switch (character)
+        {
+            case ESelectedCharacter.Est:
+                return Player;
+            case ESelectedCharacter.Seed:
+                return Seed;
+            case ESelectedCharacter.Seed_B:
+                return Seed_B;
+            default:
+                return null;
+        }
+    }
 }
