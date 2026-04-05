@@ -34,14 +34,13 @@ MonoBehaviour:
     followTarget: 0
     target: 0
     position: {x: 0, y: 0}
-    zoom: 0
+    zoom: 11.5
   BackgroundImage: []
   ImageResource: []
   ActionList:
   - rid: 2897497981599088764
   - rid: 2897497981599088765
   - rid: 2897497981599088766
-  - rid: 2897497981599088767
   - rid: 2897497981599088768
   - rid: 2897497981599088769
   - rid: 2897497981599088770
@@ -94,12 +93,6 @@ MonoBehaviour:
       type: {class: FadeInAction, ns: CutScene, asm: Assembly-CSharp}
       data:
         _actionType: 7
-        NextType: 1
-        time: 0.5
-    - rid: 2897497981599088767
-      type: {class: FadeOutAction, ns: CutScene, asm: Assembly-CSharp}
-      data:
-        _actionType: 8
         NextType: 1
         time: 0.5
     - rid: 2897497981599088768
