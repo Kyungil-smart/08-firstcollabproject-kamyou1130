@@ -71,7 +71,7 @@ public abstract class BaseSeedBean : MonoBehaviour
             _renderer.flipY = true;
             transform.position = new Vector2(transform.position.x, transform.position.y + 1.2f);
             _collider.offset = new Vector2(_collider.offset.x, _collider.offset.y - 1f);
-            textBox.transform.position = new Vector2(transform.position.x, transform.position.y - 2.5f);
+            textBox.transform.position = new Vector2(transform.position.x, transform.position.y - 3.2f);
         }
         else transform.position = new Vector2(transform.position.x, transform.position.y + -0.2f);
     }
@@ -119,8 +119,8 @@ public abstract class BaseSeedBean : MonoBehaviour
     
     public virtual bool RandomSetBool()
     {
-        int check = UnityEngine.Random.Range(0, 1);
-        if(check == 0) return true;
+        int check = UnityEngine.Random.Range(0, 50);
+        if (check > 25) return true;
         return false;
     }
 
