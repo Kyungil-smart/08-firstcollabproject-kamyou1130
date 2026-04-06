@@ -253,7 +253,6 @@ public class CutSceneManager : SingletonMonoBehaviour<CutSceneManager>
             cutSceneObj.SetPosition(data.position);
         cutSceneObj.SetDirection(data.isRight);
         StartCoroutine(cutSceneObj.Fader(true, 0));
-        cutSceneObj.ResetAnimation();
         cutSceneObj.gameObject.SetActive(data.ShowCharacter);
     }
 
