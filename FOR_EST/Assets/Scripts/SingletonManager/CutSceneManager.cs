@@ -30,6 +30,8 @@ public class CutSceneManager : SingletonMonoBehaviour<CutSceneManager>
 
     // 연출 NPC 시드콩
     public PlayerCutSceneController Seed_B { get; private set; }
+    
+    public GameObject EmptyObject { get; private set; }
 
     public ObserveValue<bool> IsPlayCutscene = new();
 
@@ -88,6 +90,8 @@ public class CutSceneManager : SingletonMonoBehaviour<CutSceneManager>
         Seed_B = Instantiate(go, new Vector2(3f, 0.5f), Quaternion.identity)
             .GetComponent<PlayerCutSceneController>();
         Seed_B.Init(pc.GetStatus);
+        EmptyObject = new GameObject("EmptyObject");
+        EmptyObject.transform.SetParent(transform);
     }
 
     //스테이지 명을 기준으로 시나리오를 호출하도록...
