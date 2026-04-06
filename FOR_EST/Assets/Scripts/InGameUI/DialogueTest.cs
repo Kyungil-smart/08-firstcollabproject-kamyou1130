@@ -153,7 +153,8 @@ public class DialogueTest : SingletonMonoBehaviour<DialogueTest>
         if (speaker == "에스트")
         {
             GameObject go = GameObject.FindGameObjectWithTag("Player");
-            //CutSceneManager.Instance.GetActior(TMP_SpriteCharacter.seed)  -> 추후 제작될 컷씬용 캐릭터 호출 방법
+            //CutSceneManager.Instance.GetActor(TMP_SpriteCharacter.seed)  -> 추후 제작될 컷씬용 캐릭터 호출 방법
+            CutSceneManager.Instance.GetCharacter
 
             if (go == null)
                 Debug.Log("Player 태그 못 찾음");
