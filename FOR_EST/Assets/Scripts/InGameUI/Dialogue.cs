@@ -5,48 +5,22 @@ using UnityEngine.InputSystem;
 
 public class Dialogue : SingletonMonoBehaviour<Dialogue>
 {
+    public RectTransform dialogueBox;
     public TMP_Text dialogueText;
-
+    private GameObject _textBox;
     Dictionary<int, string> textDict = new Dictionary<int, string>();
     Dictionary<int, int> nextDict = new Dictionary<int, int>();
     Dictionary<int, string> speakerDict = new Dictionary<int, string>();
-    public RectTransform dialogueBox;
     public Vector3 offset;
     Transform currentTarget;
     private int _currentID;
     public int languageIndex = 5; // CSV파일에서 텍스트가 있는 열의 인덱스 5 : 한국어, 6: 영어, 7: 일본어
     public const int minLang = 5;
     public const int maxLang = 7;
+    
+    private UserInput _input;
+
     public bool IsPlay { get; private set; }
-
-    public void NextLanguage()
-    {
-        languageIndex++;
-
-        if (languageIndex > maxLang)
-            languageIndex = minLang;
-
-        SetLanguage();
-    }
-
-    public void PrevLanguage()
-    {
-        languageIndex--;
-        if (languageIndex < minLang)
-            languageIndex = maxLang;
-
-        SetLanguage();
-    }
-    private void SetLanguage()
-    {
-        textDict.Clear();
-        nextDict.Clear();
-        speakerDict.Clear();
-        LoadCSV();
-
-        if (IsPlay)
-            ShowDialogue();
-    }
     public int CurrentID
     {
         set => _currentID = value;
@@ -55,7 +29,29 @@ public class Dialogue : SingletonMonoBehaviour<Dialogue>
     protected override void Awake()
     {
         base.Awake();
+        _input = new UserInput();
         LoadCSV();
+    }
+
+    private void OnEnable()
+    {
+        _input.asset.Enable();
+        _input.UI.NextDialogue.performed += PressKey;
+    }
+
+    private void OnDisable()
+    {
+        _input.UI.NextDialogue.performed -= PressKey;
+        _input.asset.Disable();
+    }
+
+    public void CreateTextBox()
+    {
+        _textBox = Resources.Load<GameObject>("DialogueBox");
+        _textBox = Instantiate(_textBox);
+
+        dialogueBox = _textBox.GetComponentInChildren<RectTransform>();
+        dialogueText = dialogueBox.GetComponentInChildren<TMP_Text>();
     }
 
     public void StartDialog(int id)
@@ -76,7 +72,7 @@ public class Dialogue : SingletonMonoBehaviour<Dialogue>
         UpdatePosition(currentTarget);
     }
 
-    public void PressG(InputAction.CallbackContext context)
+    public void PressKey(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
@@ -86,7 +82,7 @@ public class Dialogue : SingletonMonoBehaviour<Dialogue>
 
     void LoadCSV()
     {
-        TextAsset csv = Resources.Load<TextAsset>("Tutorial 1"); //가져올 CSV 파일의 이름을 입력해주세요. 
+        TextAsset csv = Resources.Load<TextAsset>("Scenario_All"); //가져올 CSV 파일의 이름을 입력해주세요. 
         string[] lines = csv.text.Split('\n');
 
         for (int i = 1; i < lines.Length; i++)
