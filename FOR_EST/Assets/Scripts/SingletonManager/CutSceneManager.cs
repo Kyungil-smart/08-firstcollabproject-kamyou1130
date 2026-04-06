@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using CutScene;
 using Unity.Cinemachine;
+using UnityEngine.Video;
 using UnityEngine;
 
 public class CutSceneManager : SingletonMonoBehaviour<CutSceneManager>
@@ -18,6 +19,8 @@ public class CutSceneManager : SingletonMonoBehaviour<CutSceneManager>
     private LayerMask cutsceneMask;
     private LayerMask beforeMask;
     public CutsceneUIController CinemaUI { get; private set; }
+    // 비디오 플레이어
+    public VideoPlayer VideoPlayer { get; private set; }
 
     // 연출 플레이어
     public PlayerCutSceneController Player { get; private set; }
@@ -27,6 +30,8 @@ public class CutSceneManager : SingletonMonoBehaviour<CutSceneManager>
 
     // 연출 NPC 시드콩
     public PlayerCutSceneController Seed_B { get; private set; }
+    
+    public GameObject EmptyObject { get; private set; }
 
     public ObserveValue<bool> IsPlayCutscene = new();
 
@@ -62,6 +67,13 @@ public class CutSceneManager : SingletonMonoBehaviour<CutSceneManager>
         if (Camera.main != null)
             Camera.main.cullingMask = Resources.Load<LayerMaskSO>("Util/DefaultCameraMask").layerMask;
         cutsceneMask = Resources.Load<LayerMaskSO>("Util/CutsceneMask").layerMask;
+
+        GameObject videoGo = new GameObject("CutsceneVideoPlayer");
+        videoGo.transform.SetParent(transform);
+        VideoPlayer = videoGo.AddComponent<VideoPlayer>();
+        VideoPlayer.playOnAwake = false;
+        VideoPlayer.renderMode = VideoRenderMode.CameraNearPlane;
+
         GameObject go = Resources.Load<GameObject>("Prefab/Cutscene/P_Est_Cutscene");
         pc = FindAnyObjectByType<PlayerController>();
         Player = Instantiate(go, transform).GetComponent<PlayerCutSceneController>();
@@ -78,6 +90,8 @@ public class CutSceneManager : SingletonMonoBehaviour<CutSceneManager>
         Seed_B = Instantiate(go, new Vector2(3f, 0.5f), Quaternion.identity)
             .GetComponent<PlayerCutSceneController>();
         Seed_B.Init(pc.GetStatus);
+        EmptyObject = new GameObject("EmptyObject");
+        EmptyObject.transform.SetParent(transform);
     }
 
     //스테이지 명을 기준으로 시나리오를 호출하도록...
