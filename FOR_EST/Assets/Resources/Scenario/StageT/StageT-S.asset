@@ -38,6 +38,7 @@ MonoBehaviour:
   BackgroundImage: []
   ImageResource: []
   ActionList:
+  - rid: 2897498049571717250
   - rid: 2897497981599088764
   - rid: 2897497981599088765
   - rid: 2897497981599088766
@@ -142,7 +143,7 @@ MonoBehaviour:
         NextType: 1
         character: 0
         animation: WakeUp
-        TrueAndFalse: 1
+        TrueAndFalse: 0
     - rid: 2897497981599088773
       type: {class: CharacterMoveAction, ns: CutScene, asm: Assembly-CSharp}
       data:
@@ -332,7 +333,7 @@ MonoBehaviour:
       type: {class: CharacterFaderAction, ns: CutScene, asm: Assembly-CSharp}
       data:
         _actionType: 5
-        NextType: 2
+        NextType: 1
         character: 1
         isFadeIn: 0
         time: 2
@@ -427,3 +428,11 @@ MonoBehaviour:
         _actionType: 13
         NextType: 1
         delayTime: 0.5
+    - rid: 2897498049571717250
+      type: {class: CharacterPlayAnimationAction, ns: CutScene, asm: Assembly-CSharp}
+      data:
+        _actionType: 4
+        NextType: 1
+        character: 0
+        animation: WakeUp
+        TrueAndFalse: 1
