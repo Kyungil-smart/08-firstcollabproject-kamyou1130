@@ -254,6 +254,7 @@ public class CutSceneManager : SingletonMonoBehaviour<CutSceneManager>
         cutSceneObj.SetDirection(data.isRight);
         StartCoroutine(cutSceneObj.Fader(true, 0));
         cutSceneObj.gameObject.SetActive(data.ShowCharacter);
+        cutSceneObj.ResetAnimation();
     }
 
     public void SetCamera(CameraCutsceneData data)
