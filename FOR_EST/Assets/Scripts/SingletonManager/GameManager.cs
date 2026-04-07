@@ -50,15 +50,20 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         if (_playerController == null) _playerController = _player.GetComponent<PlayerController>();
         
         CutSceneManager.Instance.LoadScenario(SceneManagement.Instance.CurrentSceneName);
-        CutSceneManager.Instance.PlayCutscene("Start");
+        CutSceneManager.Instance.EnqueueCutscene("Start");
         
         CheckFruitCount();
-        
+    }
+
+    private IEnumerator ClearDelayRoutine()
+    {
+        yield return YieldContainer.WaitForSeconds(2f);
+        PlayEndCutscene();
     }
 
     private void CheckFruitCount()
     {
-        Collider2D[] hits = Physics2D.OverlapBoxAll(transform.position, new Vector2(90, 57), 0f, _fruitMask);
+        Collider2D[] hits = Physics2D.OverlapBoxAll(transform.position, new Vector2(90, 80), 0f, _fruitMask);
 
         foreach (Collider2D hit in hits)
         {
@@ -71,12 +76,12 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         if (FruitCount != 0) return;
 
         Debug.Log("클리어!");
-        PlayEndCutscene();
+        StartCoroutine(ClearDelayRoutine());
     }
 
     private void PlayEndCutscene()
     {
-        CutSceneManager.Instance.PlayCutscene("End");
+        CutSceneManager.Instance.EnqueueCutscene("End");
         CutSceneManager.Instance.IsPlayCutscene.AddListener(EndCutsceneHandler);
     }
 
@@ -93,6 +98,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(new Vector2(0, 0), new Vector2(90, 57));
+        Gizmos.DrawWireCube(new Vector2(0, 0), new Vector2(90, 80));
     }
 }

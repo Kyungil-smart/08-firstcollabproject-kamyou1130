@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class SceneManagement : SingletonMonoBehaviour<SceneManagement>
 {
-    private bool isTuTorial = false;
     public string CurrentSceneName { get; private set; }
     
     protected override void Awake()
@@ -28,7 +27,7 @@ public class SceneManagement : SingletonMonoBehaviour<SceneManagement>
     public void LoadNextScene()
     {
         int currentIndex = SceneManager.GetActiveScene().buildIndex;
-        if (currentIndex == 4) currentIndex = -1;
+        if (currentIndex == 5) currentIndex = -1;
         SceneManager.LoadScene(currentIndex + 1);
     }
 
