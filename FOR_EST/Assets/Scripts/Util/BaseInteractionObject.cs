@@ -1,5 +1,8 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using TMPro;
 using UnityEngine;
 
 public abstract class BaseInteractionObject : MonoBehaviour, IPullable, IRespawnable
@@ -23,7 +26,13 @@ public abstract class BaseInteractionObject : MonoBehaviour, IPullable, IRespawn
     protected Collider2D _collider;
     protected bool _isPulling = false;
     protected bool _isRespawning = false;
-
+    private string regex = new string(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+    protected TextAsset _fruitTextFile;
+    protected Canvas _textBoxCanvas;
+    protected TextMeshProUGUI _text;
+    protected List<FruitDialogueData> _fruitDataList = new List<FruitDialogueData>();
+    protected FruitDialogueData _targetData;
+    
     public virtual void Update()
     {
         if (_isPulling && _playerHand != null)
@@ -40,12 +49,53 @@ public abstract class BaseInteractionObject : MonoBehaviour, IPullable, IRespawn
 
     public virtual void Init()
     {
+        _fruitTextFile = Resources.Load<TextAsset>("SadFruit");
+        _fruitDataList = new List<FruitDialogueData>();
         _rb = GetComponent<Rigidbody2D>();
         _renderer = GetComponent<SpriteRenderer>();
         _collider = GetComponent<Collider2D>();
+        _textBoxCanvas = GetComponentInChildren<Canvas>();
+        _text = GetComponentInChildren<TextMeshProUGUI>();
         _spawnPos = transform.position;
+        _text.text = GetTextLanguage(_targetData);
         
         PullingState(false);
+    }
+    
+    public void LoadCSV()
+    {
+        string[] lines = _fruitTextFile.text.Split('\n');
+
+        for (int i = 1; i < lines.Length; i++)
+        {
+            if (string.IsNullOrWhiteSpace(lines[i])) continue;
+            
+            string[] row = Regex.Split(lines[i], regex);
+
+            if(row.Length < 2) continue;
+            
+            FruitDialogueData data = new FruitDialogueData();
+            
+            data.id = int.Parse(row[0].Trim().Replace("\uFEFF", ""));
+            data.textKR = row[1].Trim('\"'); 
+            data.textEN = row[2].Trim('\"');
+            data.textJP = row[3].Trim();
+        
+            _fruitDataList.Add(data);
+        }
+    }
+    
+    protected string GetTextLanguage(FruitDialogueData data)
+    {
+        if (data == null) return "";
+
+        switch (LanguageSetting.currentLanguage)
+        {
+            case Language.KR: return data.textKR;
+            case Language.EN: return data.textEN;
+            case Language.JP: return data.textJP;
+            default: return data.textKR;
+        }
     }
     
     public virtual void OnPull(Transform playerHand)
@@ -103,6 +153,17 @@ public abstract class BaseInteractionObject : MonoBehaviour, IPullable, IRespawn
 
     public void SetDataWithID(int id)
     {
+        if(_fruitDataList == null) LoadCSV();
         
+        _targetData = _fruitDataList.Find(x => x.id == id);
+        if  (_targetData != null) _text.text = GetTextLanguage(_targetData);
     }
+}
+
+[System.Serializable] public class FruitDialogueData
+{
+    public int id;
+    public string textKR;
+    public string textEN;
+    public string textJP;
 }
