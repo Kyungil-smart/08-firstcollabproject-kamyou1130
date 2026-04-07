@@ -24,14 +24,18 @@ public abstract class BaseSeedBean : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (SceneManager.GetActiveScene().name != "StageT" || SceneManager.GetActiveScene().name != "Stage1")
+            if (targetData == null || targetData.id == 0)
             {
                 var textList = _seedBeanDataList.Where(x => x.stage == "all").ToList();
                 if (textList.Count > 0)
                 {
-                    int randomIndex = Random.Range(0, textList.Count);
-                    _text.text = GetTextLanguage(textList[randomIndex]);
+                    SeedBeanDialogueData randomData = textList[UnityEngine.Random.Range(0, textList.Count)];
+                    _text.text = GetTextLanguage(randomData);
                 }
+            }
+            else
+            {
+                _text.text = GetTextLanguage(targetData);
             }
             
             textBox.SetActive(true);
@@ -98,9 +102,6 @@ public abstract class BaseSeedBean : MonoBehaviour
             data.stage = row[5].Trim();
         
             _seedBeanDataList.Add(data);
-            
-            _seedBeanDataList.Add(data);
-            
         }
     }
     
@@ -124,10 +125,12 @@ public abstract class BaseSeedBean : MonoBehaviour
         return false;
     }
 
-    public virtual int RandomTextNumber()
+    public virtual void SetDataWithID(int id)
     {
-        int textNumber = UnityEngine.Random.Range(8, 20);
-        return textNumber;
+        if (_seedBeanDataList == null) LoadCSV();
+        
+        targetData = _seedBeanDataList.Find(x => x.id == id);
+        if  (targetData != null) _text.text = GetTextLanguage(targetData);
     }
 }
 
