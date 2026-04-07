@@ -24,14 +24,18 @@ public abstract class BaseSeedBean : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (SceneManager.GetActiveScene().name != "StageT" || SceneManager.GetActiveScene().name != "Stage1")
+            if (targetData == null || targetData.id == 0)
             {
                 var textList = _seedBeanDataList.Where(x => x.stage == "all").ToList();
                 if (textList.Count > 0)
                 {
-                    int randomIndex = Random.Range(0, textList.Count);
-                    _text.text = GetTextLanguage(textList[randomIndex]);
+                    SeedBeanDialogueData randomData = textList[UnityEngine.Random.Range(0, textList.Count)];
+                    _text.text = GetTextLanguage(randomData);
                 }
+            }
+            else
+            {
+                _text.text = GetTextLanguage(targetData);
             }
             
             textBox.SetActive(true);
@@ -71,7 +75,7 @@ public abstract class BaseSeedBean : MonoBehaviour
             _renderer.flipY = true;
             transform.position = new Vector2(transform.position.x, transform.position.y + 1.2f);
             _collider.offset = new Vector2(_collider.offset.x, _collider.offset.y - 1f);
-            textBox.transform.position = new Vector2(transform.position.x, transform.position.y - 2.5f);
+            textBox.transform.position = new Vector2(transform.position.x, transform.position.y - 3.2f);
         }
         else transform.position = new Vector2(transform.position.x, transform.position.y + -0.2f);
     }
@@ -98,9 +102,6 @@ public abstract class BaseSeedBean : MonoBehaviour
             data.stage = row[5].Trim();
         
             _seedBeanDataList.Add(data);
-            
-            _seedBeanDataList.Add(data);
-            
         }
     }
     
@@ -119,15 +120,17 @@ public abstract class BaseSeedBean : MonoBehaviour
     
     public virtual bool RandomSetBool()
     {
-        int check = UnityEngine.Random.Range(0, 1);
-        if(check == 0) return true;
+        int check = UnityEngine.Random.Range(0, 50);
+        if (check > 25) return true;
         return false;
     }
 
-    public virtual int RandomTextNumber()
+    public void SetDataWithID(int id)
     {
-        int textNumber = UnityEngine.Random.Range(8, 20);
-        return textNumber;
+        if (_seedBeanDataList == null) LoadCSV();
+        
+        targetData = _seedBeanDataList.Find(x => x.id == id);
+        if  (targetData != null) _text.text = GetTextLanguage(targetData);
     }
 }
 

@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// 게임의 전반적인 클리어 조건
@@ -72,7 +74,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
         Debug.Log("클리어!");
         IsClear = true;
-        // SceneManagement.Instance.LoadNextScene();
     }
 
     public void PlayEndCutscene()
