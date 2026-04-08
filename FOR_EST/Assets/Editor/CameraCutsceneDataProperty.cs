@@ -29,6 +29,8 @@ public class CameraCutsceneDataProperty : PropertyDrawer
             }
             EditorGUILayout.PropertyField(property.FindPropertyRelative("zoom"),
                 new GUIContent("줌", "줌 값을 설정합니다. 기본값 11.5, 작으면 줌인, 크면 줌아웃"));
+            EditorGUILayout.PropertyField(property.FindPropertyRelative("showInGameObject"),
+                new GUIContent("인게임 오브젝트 출력", "인게임에 배치된 오브젝트를 출력합니다. 그래도 플레이어, 시드는 출력하지 않습니다."));
             
             EditorGUI.indentLevel--;
         }

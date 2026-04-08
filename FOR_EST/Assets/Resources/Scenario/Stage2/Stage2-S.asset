@@ -35,6 +35,7 @@ MonoBehaviour:
     target: 0
     position: {x: 7, y: 0}
     zoom: 6.5
+    showInGameObject: 1
   Triggers:
   - position: {x: 26, y: 12}
     triggerSOName: Stage2-1

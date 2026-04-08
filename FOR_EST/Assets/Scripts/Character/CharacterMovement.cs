@@ -68,6 +68,12 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
+    public void SetStandby()
+    {
+        _rigidbody.linearVelocity = Vector2.zero;
+        _status.InputAxis.Value = Vector2.zero;
+    }
+
     public void ChangeJumpState(IState state)
     {
         _jumpStateMachine.ChangeState(state);

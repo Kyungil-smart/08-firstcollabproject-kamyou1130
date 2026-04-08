@@ -11,6 +11,7 @@ namespace CutScene
         public bool followTarget;
         public ESelectedCharacter target;
         public Vector2 position;
-        [Min(0.1f)]public float zoom; 
+        [Min(0.1f)]public float zoom;
+        public bool showInGameObject = false;
     }
 }
