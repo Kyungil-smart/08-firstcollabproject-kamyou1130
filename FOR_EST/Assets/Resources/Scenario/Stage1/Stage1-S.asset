@@ -40,6 +40,7 @@ MonoBehaviour:
   CutsceneObject: []
   ActionList:
   - rid: 7021410954987438246
+  - rid: 7021411068530393325
   - rid: 7021410910219010348
   - rid: 7021410954987438247
   - rid: 7021410954987438249
@@ -349,3 +350,9 @@ MonoBehaviour:
         NextType: 2
         position: {x: -8, y: 10.5}
         time: 3
+    - rid: 7021411068530393325
+      type: {class: DelayAction, ns: CutScene, asm: Assembly-CSharp}
+      data:
+        _actionType: 13
+        NextType: 1
+        delayTime: 0.5
