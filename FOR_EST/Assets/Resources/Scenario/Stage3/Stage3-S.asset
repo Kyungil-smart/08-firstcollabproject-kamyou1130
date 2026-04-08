@@ -35,8 +35,9 @@ MonoBehaviour:
     target: 0
     position: {x: 0, y: 0}
     zoom: 4.5
-  BackgroundImage: []
-  ImageResource: []
+    showInGameObject: 1
+  Triggers: []
+  CutsceneObject: []
   ActionList:
   - rid: 2307714538049634401
   - rid: 2307714452121190488
