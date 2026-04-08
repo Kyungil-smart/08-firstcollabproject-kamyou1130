@@ -20,7 +20,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private LayerMask _fruitMask;
     private LayerMask _playerMask;
     private PlayerController _playerController;
-
+    public bool IsClear { get; private set; }
     protected override void Awake()
     {
         base.Awake();
@@ -76,6 +76,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         if (FruitCount != 0) return;
 
         Debug.Log("클리어!");
+        IsClear = true;
         StartCoroutine(ClearDelayRoutine());
     }
 
