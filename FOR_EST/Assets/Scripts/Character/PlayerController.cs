@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour, IRespawnable, IGrabInteractor
         _input.Player.Grab.performed += OnInteract;
         
         _anim.SetBool("Reverse", _status.IsReverse);
+        _movement.SetStandby();
     }
 
     private void OnDisable()
