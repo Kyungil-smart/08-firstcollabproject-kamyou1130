@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class SceneManagement : SingletonMonoBehaviour<SceneManagement>
 {
-    private bool isTuTorial = false;
     public string CurrentSceneName { get; private set; }
     
     protected override void Awake()
@@ -17,6 +16,7 @@ public class SceneManagement : SingletonMonoBehaviour<SceneManagement>
     {
         CurrentSceneName = scene.name;
         Dialogue.Instance.CreateTextBox();
+        GameManager.Instance.IsClear = false;
         GameManager.Instance.OnSceneLoadedCheck();
     }
 
@@ -29,7 +29,7 @@ public class SceneManagement : SingletonMonoBehaviour<SceneManagement>
     {
         CutSceneManager.Instance.UnLoadScenario();
         int currentIndex = SceneManager.GetActiveScene().buildIndex;
-        if (currentIndex == 4) currentIndex = -1;
+        if (currentIndex == 5) currentIndex = -1;
         SceneManager.LoadScene(currentIndex + 1);
     }
 

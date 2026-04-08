@@ -20,7 +20,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private LayerMask _fruitMask;
     private LayerMask _playerMask;
     private PlayerController _playerController;
-
+    public bool IsClear { get; set; }
     protected override void Awake()
     {
         base.Awake();
@@ -38,7 +38,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     // 즉시 체크하면 Awake 단계에서 오브젝트가 생성되지 않은 상태에서 검사하는 경우가 발생
     public void OnSceneLoadedCheck()
     {
-        if (SceneManagement.Instance.CurrentSceneName == "TitleScene_SHY") return;
+        if (SceneManagement.Instance.CurrentSceneName == "TitleScene") return;
         StartCoroutine(DelayCheck());
     }
 
@@ -53,7 +53,12 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         CutSceneManager.Instance.EnqueueCutscene("Start");
         
         CheckFruitCount();
-        
+    }
+
+    private IEnumerator ClearDelayRoutine()
+    {
+        yield return YieldContainer.WaitForSeconds(2f);
+        PlayEndCutscene();
     }
 
     private void CheckFruitCount()
@@ -71,7 +76,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         if (FruitCount != 0) return;
 
         Debug.Log("클리어!");
-        PlayEndCutscene();
+        IsClear = true;
+        StartCoroutine(ClearDelayRoutine());
     }
 
     private void PlayEndCutscene()

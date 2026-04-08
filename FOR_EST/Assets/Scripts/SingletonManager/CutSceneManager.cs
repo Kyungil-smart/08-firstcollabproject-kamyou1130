@@ -190,6 +190,7 @@ public class CutSceneManager : SingletonMonoBehaviour<CutSceneManager>
 
     public void EnqueueCutscene(string cutSceneName)
     {
+        CurrentActionsIndex = 0;
         if (Scenarios.ContainsKey(cutSceneName))
         {
             ScenarioQueue.Enqueue(Scenarios[cutSceneName]);

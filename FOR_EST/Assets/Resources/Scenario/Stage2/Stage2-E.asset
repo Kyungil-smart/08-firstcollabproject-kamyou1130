@@ -16,19 +16,19 @@ MonoBehaviour:
     character: 0
     ShowCharacter: 1
     GetInGamePosition: 0
-    position: {x: 7, y: 0.1}
+    position: {x: 7, y: 1}
     isRight: 0
   SeedData:
     character: 1
     ShowCharacter: 1
     GetInGamePosition: 0
-    position: {x: 5, y: 0.1}
+    position: {x: 5, y: 1}
     isRight: 1
   SeedBData:
     character: 2
     ShowCharacter: 1
     GetInGamePosition: 0
-    position: {x: 6, y: 0.1}
+    position: {x: 6, y: 1}
     isRight: 1
   CameraData:
     followTarget: 1
@@ -36,7 +36,7 @@ MonoBehaviour:
     position: {x: 0, y: 0}
     zoom: 6.5
   Triggers: []
-  ImageResource: []
+  CutsceneObject: []
   ActionList:
   - rid: 2897498080415842554
   - rid: 4832695620617109607
