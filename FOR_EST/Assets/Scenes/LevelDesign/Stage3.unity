@@ -209,6 +209,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: InGamePanelManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3294090085801496803, guid: defe42e2958a7014c9af705752a5381f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5307896291697179856, guid: defe42e2958a7014c9af705752a5381f, type: 3}
       propertyPath: jpPanel
       value: 
@@ -640,6 +644,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 237410430}
     m_Modifications:
+    - target: {fileID: 146603580040022240, guid: 27437be2b15643744b701ea561538711, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 146603580040022240, guid: 27437be2b15643744b701ea561538711, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 146603580040022240, guid: 27437be2b15643744b701ea561538711, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 702362810095000721, guid: 27437be2b15643744b701ea561538711, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -690,23 +706,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 702362810095000721, guid: 27437be2b15643744b701ea561538711, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 702362810095000721, guid: 27437be2b15643744b701ea561538711, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 702362810095000721, guid: 27437be2b15643744b701ea561538711, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 702362810095000721, guid: 27437be2b15643744b701ea561538711, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 393.3252
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 702362810095000721, guid: 27437be2b15643744b701ea561538711, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 922.5146
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 702362810095000721, guid: 27437be2b15643744b701ea561538711, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -723,6 +739,18 @@ PrefabInstance:
     - target: {fileID: 4861887098132174327, guid: 27437be2b15643744b701ea561538711, type: 3}
       propertyPath: m_Name
       value: InGameEscMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 4861887098132174327, guid: 27437be2b15643744b701ea561538711, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6939740544358517629, guid: 27437be2b15643744b701ea561538711, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6939740544358517629, guid: 27437be2b15643744b701ea561538711, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
