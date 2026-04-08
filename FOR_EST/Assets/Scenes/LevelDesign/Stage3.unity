@@ -1018,6 +1018,68 @@ Transform:
   m_Children: []
   m_Father: {fileID: 237410430}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1053578085
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8014556687680729468}
+    m_Modifications:
+    - target: {fileID: 1785131040745210870, guid: e573e809daf9d3d4e8cca0a3cf3b3528, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 893.55927
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785131040745210870, guid: e573e809daf9d3d4e8cca0a3cf3b3528, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 499.39133
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785131040745210870, guid: e573e809daf9d3d4e8cca0a3cf3b3528, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785131040745210870, guid: e573e809daf9d3d4e8cca0a3cf3b3528, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785131040745210870, guid: e573e809daf9d3d4e8cca0a3cf3b3528, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785131040745210870, guid: e573e809daf9d3d4e8cca0a3cf3b3528, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785131040745210870, guid: e573e809daf9d3d4e8cca0a3cf3b3528, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785131040745210870, guid: e573e809daf9d3d4e8cca0a3cf3b3528, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785131040745210870, guid: e573e809daf9d3d4e8cca0a3cf3b3528, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785131040745210870, guid: e573e809daf9d3d4e8cca0a3cf3b3528, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4072423612440123868, guid: e573e809daf9d3d4e8cca0a3cf3b3528, type: 3}
+      propertyPath: m_Name
+      value: HappinessTreeEffect
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e573e809daf9d3d4e8cca0a3cf3b3528, type: 3}
+--- !u!4 &1053578086 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1785131040745210870, guid: e573e809daf9d3d4e8cca0a3cf3b3528, type: 3}
+  m_PrefabInstance: {fileID: 1053578085}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1369823971
 GameObject:
   m_ObjectHideFlags: 0
@@ -1876,23 +1938,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6932201803611889346}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1319434667733843206
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4887664130353893990}
-  - component: {fileID: 8427054001322610529}
-  m_Layer: 0
-  m_Name: HappinessTreeEffect
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1368088534013149151
 GameObject:
   m_ObjectHideFlags: 0
@@ -3609,21 +3654,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4887664130353893990
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1319434667733843206}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.94708, y: -20.57464, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8014556687680729468}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4951773826595137637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22171,7 +22201,7 @@ Transform:
   - {fileID: 7438781091118343751}
   - {fileID: 4555102268363228234}
   - {fileID: 8808211384038343043}
-  - {fileID: 4887664130353893990}
+  - {fileID: 1053578086}
   - {fileID: 6555508270563043572}
   - {fileID: 2524488043929893254}
   - {fileID: 2553578344687359745}
@@ -22413,43 +22443,6 @@ MonoBehaviour:
   groundY: 21.5
   halfWidth: 2.5
   yJitter: 0.05
---- !u!114 &8427054001322610529
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1319434667733843206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18f366ee75a40b24bbf82512fb217db8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HappinessTreeEffect
-  _count: 80
-  _spawnHalfWidth: 20
-  _spawnDepthMin: 10.5
-  _spawnDepthMax: -12
-  _groundY: 0
-  _minSize: 0.12
-  _maxSize: 0.5
-  _minRiseSpeed: 0.4
-  _maxRiseSpeed: 1.2
-  _wobbleAmplitude: 0.3
-  _wobbleSpeed: 1.2
-  _sparkleStrength: 0.35
-  _sparkleSpeed: 2.5
-  _colors:
-  - {r: 0.55, g: 0.9, b: 0.3, a: 1}
-  - {r: 0.4, g: 0.85, b: 0.45, a: 1}
-  - {r: 0.8, g: 0.95, b: 0.3, a: 1}
-  - {r: 1, g: 0.88, b: 0.3, a: 1}
-  - {r: 0.7, g: 1, b: 0.55, a: 1}
-  - {r: 0.95, g: 1, b: 0.6, a: 1}
-  - {r: 0.5, g: 0.95, b: 0.7, a: 1}
-  _maxAlpha: 0.85
-  _minAlpha: 0
-  _sortingLayerName: Default
-  _sortingOrder: 5
 --- !u!114 &8489747995513847788
 MonoBehaviour:
   m_ObjectHideFlags: 0
