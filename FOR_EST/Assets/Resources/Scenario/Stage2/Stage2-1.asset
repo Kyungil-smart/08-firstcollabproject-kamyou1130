@@ -36,8 +36,10 @@ MonoBehaviour:
     position: {x: 0, y: 0}
     zoom: 11.5
   Triggers: []
-  ImageResource: []
+  CutsceneObject:
+  - {fileID: 52560932767612020, guid: b68a7bb76ca03554182c3cd12e934140, type: 3}
   ActionList:
+  - rid: 7021411068530393202
   - rid: 4832695620617109584
   - rid: 4832695620617109638
   - rid: 4832695620617109586
@@ -151,3 +153,10 @@ MonoBehaviour:
         NextType: 1
         position: {x: 25.5, y: 15}
         time: 1
+    - rid: 7021411068530393202
+      type: {class: CreateObjectAction, ns: CutScene, asm: Assembly-CSharp}
+      data:
+        _actionType: 16
+        NextType: 1
+        objectNumber: 0
+        position: {x: 24, y: 15.5}
