@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class CharacterMovement : MonoBehaviour
 {
-    private PlayerStatus _status;
+    private CharacterStatus _status;
 
     public Rigidbody2D _rigidbody { get; private set; }
     private BoxCollider2D _collider;
@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     private LayerMask _jumpFallingLayer;
 
-    public void Init(PlayerStatus status)
+    public void Init(CharacterStatus status)
     {
         _status = status;
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -66,6 +66,12 @@ public class PlayerMovement : MonoBehaviour
             if (_walkAnimSpeed < 0.1) _walkAnimSpeed = 0f;
             Anim.SetFloat("MoveSpeed", _walkAnimSpeed);
         }
+    }
+
+    public void SetStandby()
+    {
+        _rigidbody.linearVelocity = Vector2.zero;
+        _status.InputAxis.Value = Vector2.zero;
     }
 
     public void ChangeJumpState(IState state)
