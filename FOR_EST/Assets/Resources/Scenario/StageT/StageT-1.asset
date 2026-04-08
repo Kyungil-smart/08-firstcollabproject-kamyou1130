@@ -35,6 +35,7 @@ MonoBehaviour:
     target: 0
     position: {x: 9, y: 8.6}
     zoom: 7.5
+    showInGameObject: 1
   Triggers: []
   CutsceneObject: []
   ActionList:
