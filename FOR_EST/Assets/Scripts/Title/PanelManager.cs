@@ -1,4 +1,3 @@
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class PanelManager : MonoBehaviour
